@@ -55,7 +55,6 @@ html5lib==1.0.1
 idna==2.6
 imageio==2.2.0
 imagesize==0.7.1
-importlib-metadata @ file:///tmp/build/80754af9/importlib-metadata_1602276842396/work
 importlib-resources==3.3.0
 ipython==6.2.1
 ipython-genutils==0.2.0
@@ -73,13 +72,11 @@ jupyter-core==4.4.0
 jupyterlab==0.31.4
 jupyterlab-launcher==0.10.2
 Keras==2.3.1
-Keras-Applications @ file:///tmp/build/80754af9/keras-applications_1594366238411/work
 Keras-Preprocessing==1.1.0
 lazy-object-proxy==1.3.1
 llvmlite==0.21.0
 locket==0.2.0
 lxml==4.1.1
-Markdown @ file:///C:/ci/markdown_1605111171606/work
 MarkupSafe==1.0
 matplotlib==2.1.2
 mccabe==0.6.1
@@ -100,7 +97,6 @@ nose==1.3.7
 notebook==5.4.0
 numba==0.36.2
 numexpr==2.6.4
-numpy @ file:///C:/ci/numpy_and_numpy_base_1603480701039/work
 numpydoc==0.7.0
 oauthlib==3.1.0
 odo==0.5.1
@@ -161,12 +157,10 @@ rsa==4.6
 ruamel-yaml==0.15.35
 scikit-image==0.13.1
 scikit-learn==0.19.1
-scipy @ file:///C:/ci/scipy_1597675683670/work
 seaborn==0.8.1
 Send2Trash==1.4.2
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
-six @ file:///C:/ci/six_1605187303045/work
 snowballstemmer==1.2.1
 sortedcollections==0.5.3
 sortedcontainers==1.5.9
@@ -204,5 +198,4 @@ XlsxWriter==1.0.2
 xlwings==0.11.5
 xlwt==1.3.0
 zict==0.1.3
-zipp @ file:///tmp/build/80754af9/zipp_1604001098328/work
 zope.interface==5.2.0
