@@ -1,4 +1,3 @@
-absl-py @ file:///C:/ci/absl-py_1603889282672/work
 alabaster==0.7.10
 asn1crypto==0.24.0
 astor==0.8.1
