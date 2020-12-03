@@ -1,0 +1,113 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UploadDeal</title>
+</head>
+<style>
+    body{
+        background: linear-gradient(rgb(37, 25, 1),white) no-repeat;
+        background-color:#000000;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment:fixed;
+        }
+    .column{
+        display:grid;
+        grid-template-columns:300px 300px;
+        padding: 20px;
+    }
+    .block{
+       background-image: linear-gradient(to right,rgb(173, 173, 173),rgb(255, 255, 255));
+       height:auto;
+       width:800px;
+       margin:auto;
+       margin-top:60px;
+       text-align: right;
+       color:rgb(0, 0, 0);
+       font-weight: bold;
+       font-family: 'Times New Roman', Times, serif;
+       font-size: 18px;
+       border-style: groove;
+    }
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(102, 100, 100);
+    /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(102, 100, 100);
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(102, 100, 100);
+    }
+    .s{
+        width:100%;
+        height:50px;
+        color:rgb(255, 255, 255);
+        background-color: green;
+        margin-top:30px;
+    }
+</style>
+<script>
+    Filevalidation=() => { 
+        const fi = document.getElementById('deal_image'); 
+        // Check if any file is selected. 
+        if (fi.files.length > 0) { 
+            for (const i = 0; i <= fi.files.length - 1; i++) { 
+  
+                const fsize = fi.files.item(i).size; 
+                const file = Math.round((fsize / 1024)); 
+                // The size of the file. 
+                if (file >= 1024) { 
+                    alert( 
+                      "File too Big, please select a file less than 1mb"); 
+                      fi.value=""
+                } else { 
+                    pass
+                } 
+            } 
+        } 
+    } 
+</script>
+<body>
+    <div class="block">
+    <form action="/PostDeal" method="POST" autocomplete="off" enctype="multipart/form-data">
+        <div style="text-align: center;text-decoration: underline;text-decoration-style: double;font-weight: bold;background-color:black;color:white;padding:1px"><h1>UPLOAD DEAL</h1></div>
+        <div class="column">
+            <div>
+                Name :&nbsp;&nbsp;&nbsp;
+            </div>
+            <div>
+                <input type="text" name="title" placeholder="Enter Deal Title" style="float: left;" required autofocus>
+            </div>
+            <div style="margin-top:30px">
+                Description :&nbsp;&nbsp;&nbsp;
+            </div>
+            <div style="margin-top:30px">
+                <textarea type="text" name="description" placeholder="Enter Description" style="float: left;" required></textarea>
+            </div>
+            <div style="margin-top:30px">
+                Price :&nbsp;&nbsp;&nbsp;
+            </div>
+            <div style="margin-top:30px">
+                <input type="number" name="price" placeholder="Enter Price" style="float: left;" required>
+            </div>
+            <div style="margin-top:30px">
+                Image :&nbsp;&nbsp;&nbsp;
+            </div>
+            <div style="margin-top:30px">
+                <input type="file" name="deal_image" id="deal_image" onchange="Filevalidation()" placeholder="Select Image" style="float: left;cursor: pointer;" required></textarea>
+            </div>
+        </div>
+        <input class="s" type="submit" value="SUBMIT">
+    </form>
+        <a href="/ChefPortal" style="text-decoration: none;"><button class="s" style="background-color: red;margin-top:10px">RETURN</button></a> 
+    </div>
+</body>
+</html>
+{% endblock %}

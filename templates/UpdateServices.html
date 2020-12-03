@@ -1,0 +1,48 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpdateSlider</title>
+    <style>
+        .bk{
+            background-image: linear-gradient(to right,silver,rgba(0, 0, 0, 0.596));
+        }
+        .vf{
+            background-color: rgb(235, 233, 233);
+            font-size: 15px;
+            height:360px;
+            width:500px;
+            margin:auto;
+            margin-top: 150px;
+            padding: 20px;
+            text-align: center;
+            align-content: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            border: 5px;
+            border-color: grey;
+            border-style:ridge;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bk">
+    <div class="vf">
+        <img src="/static/FypNewLogo.svg" height="40px" width="80px">
+        <h2 style="text-transform: uppercase;">UPDATE SERVICES</h2>
+        <form action="/UpdateServicesProcess" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <h4>SLIDE NO : </h4><select name="package" style="width:300px" required>
+            <option value="normal">NORMAL</option>
+            <option value="sea-view">SEA-VIEW</option>
+            <option value="luxury">LUXURY</option>
+        </select>
+        <input type="text" name="services" placeholder="ENTER Services" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);margin-top: 15px;margin-left: 25px;" required><br><br>
+        <input type="password" name="key" placeholder="ADMINISTRATION KEY" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);margin-left: 25px;" required><br><br>
+        <input type="submit" value="SUBMIT" style="background-color: rgba(153, 255, 0, 0.63);cursor: pointer;font-size: 18px;font-weight: bold;text-align: center;border-color: rgb(75, 75, 75);">
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

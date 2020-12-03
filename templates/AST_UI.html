@@ -1,0 +1,94 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST</title>
+    <style>
+        .bk{
+            background-image: linear-gradient(to right,silver,rgba(0, 0, 0, 0.596));
+        }
+        .vf{
+            background-color: rgb(235, 233, 233);
+            font-size: 15px;
+            height:350px;
+            width:450px;
+            margin:auto;
+            margin-top: 150px;
+            padding: 20px;
+            text-align: center;
+            align-content: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            border: 5px;
+            border-color: grey;
+            border-style:ridge;
+        }
+        .loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            position: relative;
+            border: 4px solid #Fff;
+            animation: loader 2s infinite ease;
+        }
+        .loader-wrapper{
+            display:none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #30231296;
+            justify-content: center;
+            align-items: center;
+        }
+        .loader-inner {
+            vertical-align: top;
+            display: inline-block;
+            width: 100%;
+            background-color: #fff;
+            animation: loader-inner 2s infinite ease-in;
+        }
+        @keyframes loader {
+        0% { transform: rotate(0deg);}
+        25% { transform: rotate(180deg);}
+        50% { transform: rotate(180deg);}
+        75% { transform: rotate(360deg);}
+        100% { transform: rotate(360deg);}
+        }
+        @keyframes loader-inner {
+        0% { height: 0%;}
+        25% { height: 0%;}
+        50% { height: 100%;}
+        75% { height: 100%;}
+        100% { height: 0%;}
+        }
+    </style>
+    <script>
+        function form_submit(){
+            var loader=document.getElementById("lw");
+            var form=document.getElementById("AST");
+            loader.style.display="flex";
+            setTimeout(function(){ form.submit()}, 4000);
+        }
+    </script>
+</head>
+<body class="bk">
+    <div class="loader-wrapper" id="lw">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <div class="vf">
+        <img src="/static/FypNewLogo.svg" height="40px" width="80px">
+        <form action="/AST_Command" id="AST" method="POST" enctype="multipart/form-data" autocomplete="off" onsubmit="form_submit()">
+        <h2>AST PORTAL</h2>
+        <input type="number" name="rn" placeholder="ENTER ROOM NUMBER" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);" required><br><br>
+        <input type="text" name="cn" placeholder="ENTER CUSTOMER NAME" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);" required><br><br>
+        <input type="password" name="ck" placeholder="ENTER CHEF KEY" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);" required><br><br>
+        <input type="submit" value="SUBMIT" style="background-color: rgba(153, 255, 0, 0.63);cursor: pointer;font-size: 18px;font-weight: bold;text-align: center;border-color: rgb(75, 75, 75);">
+    </form> 
+    </div>
+</body>
+</html>
+{% endblock %}

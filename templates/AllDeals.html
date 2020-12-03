@@ -1,0 +1,113 @@
+{% extends "SecondLayout.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderNow</title>
+    <style>
+        .b{
+            background-image:linear-gradient(to right,black,silver);
+            background-size:cover;
+            background-color: black;
+        }
+        .area{
+        display: grid;
+        grid-template-columns: 300px 300px 300px 300px;
+        align-items: center;
+        margin-left:50px
+        }
+        .card {
+        display: grid;
+        grid-template-columns: 219px;
+        grid-template-rows: 150px 120px;
+        grid-template-areas: "image" "text";
+        border-radius: 10px;
+        background: white;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-align: center;
+        transition: 0.5s ease;
+        cursor: pointer;
+        margin:40px;
+        max-width: 250px;
+        }
+        .card-image {
+        grid-area: "image";
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        }
+        .card-text {
+        grid-area: "text";
+        background-size: cover;
+        text-align: center;
+        max-width: 350px;
+        margin:5px;
+        }
+        .card-text .date {
+        color: rgb(51, 44, 27);
+        font-size:13px;
+        }
+        .card-text p {
+        color: grey;
+        font-size:15px;
+        font-weight: 300;
+        }
+        .card-text h2 {
+        margin-top:0px;
+        font-size:20px;
+        }
+        .card:hover {
+        transform: scale(1.15);
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+        }
+        .AddToCart{
+            background-color:crimson;
+            max-width: 150px;
+            max-height:50px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            padding: 3px;
+            position: relative;
+            margin-top: none;
+            margin-left: 10px;
+        }
+        @media only screen and (max-width:1200px){
+            .area{
+                grid-template-columns: 300px 300px 300px;
+            }}
+        @media only screen and (max-width:900px){
+            .area{
+                grid-template-columns: 300px 300px;
+            }}
+        @media only screen and (max-width:600px){
+            .area{
+                display:inline-block;
+                margin-left: 100px;
+            }
+            .b{
+                background-color: black;
+            }
+            }
+    </style>
+</head>
+<body class="b">   
+    <div class="area">
+        {% for i in deals %}
+        <div class="card" >
+            <div class="card-image">
+                <img src="{{url_for('file',filename=i['deal_image'])}}" style="border-radius: 20px;" alt="ImageNotFound" height="100%" width="100%">
+            </div>
+            <div class="card-text" id="ct">
+            <form action="/addItem" method="Post">
+              <h2>{{i.deal_name}}</h2>
+              <p>{{i.description}}</p>
+              <h5 style="font-weight: bold;">Price : {{i.price}}$</h5>
+            </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

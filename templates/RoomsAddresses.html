@@ -1,0 +1,61 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoomsAddresses</title>
+    <style>
+        .bk{
+            background-color: rgba(192, 192, 192, 0.719);
+        }
+        table, th, td {
+            border: 1px solid black;
+            font-weight: bold;
+            margin:auto;
+            padding: 5px;
+            text-align: center;
+        }
+        td{
+            width: 200px;
+        }
+        .ra{
+            background-color: rgba(16, 43, 9, 0.425);
+            color:black;
+            padding: 10px;
+            margin-top: 10px;
+            border-style:ridge;
+            font-weight: bold;
+        }
+        .ra:hover{
+            border-color: rgba(0, 0, 0, 0.336);
+        }
+    </style>
+</head>
+<body class="bk">
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;"></a>
+    <div style="text-align: center;"><br><br>
+    <h2 style="font-weight: bold;"><q>ROOMS ADDRESSES</q></h2><br>
+    <table>
+            <th style="background-color: black;color:white">ROOM</td>
+            <th style="background-color: black;color:white">ADDRESS</td>
+            <th style="background-color: black;color:white">UPDATE</td> 
+    {% for i in data %}
+        <tr>
+            {% if loop.index <=2 %}
+            {% else %}
+            <td>{{i}}</td>
+            <td>{{address[i]}}</td>
+            <form action="/RoomAddress" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="room" value="{{i}}">
+            <td><button onclick="this.form.submit()" style="padding: 2px;font-weight: bold;background-color: green;color:white;width:70px;">Edit</button></td>
+            </form>
+            {%endif%}
+        </tr>
+    {% endfor %}
+    </table>
+    <a href="/AddRoom" style="text-decoration:none;"><button class="ra">Add Room</button></a>
+</body>
+</html>
+{% endblock %}

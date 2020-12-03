@@ -1,0 +1,57 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <style>
+        .b{
+            background-image:url("/static/billing.jpg");
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+            align-items: center;
+        }
+        .card{
+            min-height:600px;
+            max-width: 400px;
+            box-shadow: 10px 10px black;
+            background-color:rgba(209, 209, 209, 0.938);
+            opacity: 1.0;
+            text-align: center;
+            align-items: center;
+            border-style:dashed;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color:black;
+            font-size: 18px;
+            margin-top:15px;
+            border-color: black;
+        }
+        .card h1{
+            text-shadow: 2px 2px blue;
+            text-decoration: underline;
+            text-decoration-style: double;
+            padding-bottom: 20px;
+        }
+        .card:hover{
+            background-color:rgb(214, 214, 214);
+        }
+    </style>
+</head>
+<body class="b">
+    <center><div class="card">
+        {% set temp = 1 %}
+        <h1>BILLING</h1>
+        <p><strong>Package Price :</strong> {{pA}}</p>
+        {% for b in bill %}
+            <h3><u>Order {{loop.index}}</u></h3>
+            <p><strong>DateTime :</strong> {{b.dateTime}}</p>
+            <p><strong>Amount :</strong> {{b.amount}}$</p>
+        {% endfor %}
+        <h2 style="border-style:double;padding:5px"><strong>TOTAL : {{total}}$</strong></h2>
+    </div></center><br><br>
+</html>
+{% endblock %}

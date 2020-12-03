@@ -1,0 +1,536 @@
+{% extends "Layout.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" >
+    <title>ASS</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        #loading{
+            position: fixed;
+            width:100%;
+            height: 100vh;
+            background:black 
+            url(/static/onload.gif)
+             no-repeat center;
+            z-index: 99999;
+        }
+        .CoverImage{
+            max-width: 100%;
+            max-height: 600px;
+            min-width: 100%;
+            min-height: 150px;
+            padding-bottom: 0;
+            padding: 0;
+            margin: 0;
+        }
+        .part{
+            height: 800px;
+            width: 100%;
+        }
+        .SystemAbstract{
+            max-height: 900px;
+            min-height: 470px;
+            width:100%;
+            background-color: rgba(255, 255, 255, 0.788);
+            display: grid;
+            grid-template-columns: 600px 500px;
+            grid-gap: 100px;
+            margin-top: 130px;
+        }
+        .Facilites{
+            min-height: 470px;
+            max-height: 1000px;
+            width:100%;
+            background-color: rgba(255, 255, 255, 0.788);
+            display: grid;
+            grid-template-columns: 900px 300px;
+            grid-gap: 50px;
+            grid-template-areas: auto;
+            margin-top: 150px;
+        }
+        .Footer{
+            min-height: 400px;
+            min-width: 100%;
+            max-height: 1300px;
+            background-color: rgb(0, 0, 0);
+            margin-top: 200px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+        }
+        .Reasons{
+            min-height:400px;
+            min-width: 100%;
+            max-height: 1600px;
+            background-color: rgba(255, 255, 255, 0.788);
+            display:grid;
+            grid-template-columns: 400px 500px 400px;
+            opacity: 0.8;
+            margin-top: 200px;
+        }
+        .Logo{
+            min-width: 200px;
+            min-height: 200px;
+            border-right:solid 5px black;
+            border-top:solid 10px black;
+            border-left:solid 5px black;
+            border-bottom:solid 10px black;
+            border-radius: 30px;
+            padding: 10px;
+            float: right;
+            margin-top: 70px;
+        }
+        .SystemAbstractText{
+            font-family: Impact, Charcoal, sans-serif;
+            margin-left: 100px;
+            margin-top:150px;
+            letter-spacing: 2px;
+            font-size: 30px;
+            text-shadow:   2px 2px rgb(1, 13, 1), 1px 3px rgb(156, 65, 4);
+        }
+        .SystemAbstractText:hover{
+            text-shadow:   2px 2px maroon, 1px 3px rgb(1, 13, 1);
+            cursor: pointer;
+        }
+         .DoubleUnderline{
+             text-decoration-line: underline;
+             text-decoration-style: double;
+        }
+        .FacilitiesImage{
+            width: 800px;
+            height: 450px;
+            border-right:solid 5px black;
+            border-top:solid 5px black;
+            border-left:solid 5px black;
+            border-bottom:solid 5px black;
+            border-radius: 30px;
+            float: left;
+            padding: 5px;
+            margin-top: 0px;
+            margin-left: 30px;
+        }
+        .Luxury-Facilities{
+            display: grid;
+            grid-template-columns:360px 900px;
+        }
+        @media only screen and (max-width:1350px){
+            .Luxury-Facilities{
+                grid-template-columns:350px 900px;
+            }
+        }
+        @media only screen and (max-width:1350px){
+            .SystemAbstract{
+                display:inline-flex;
+            }
+            .Logo{
+                height: 300px;
+                width: 450px;
+                float:none;
+                margin-bottom:30px;   
+            }
+            .FacilitiesImage{
+                height: 400px;
+                width: 450px;
+                float: none;
+                margin-top:30px;
+                margin-bottom: 30px;
+            }
+            .Facilites{
+                grid-template-columns: 550px 300px;
+            }
+            .Luxury-Facilities{
+            grid-template-columns:300px 550px;
+            }
+            .Footer{
+                display:inline-block;
+            }
+            .Reasons{
+                display:inline-table;
+            }
+        }
+        @media only screen and (max-width:950px){
+            .SystemAbstract{
+                display:inline-block;
+            }
+            .Logo{
+                height: 200px;
+                width: 450px;
+                margin-bottom:30px;   
+            }
+            .FacilitiesImage{
+                height: 200px;
+                width: 450px;
+                float: none;
+                margin-top:30px;
+                margin-bottom: 30px;
+            }
+            .Facilites{
+                display:inline-block;
+            }
+            .Luxury-Facilities{
+            display: inline-block;
+            }
+            .Footer{
+                display:inline-block;
+            }
+            .Reasons{
+                display:inline-table;
+            }
+        }
+        #StTB {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: maroon;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        #StTB:hover {
+        background-color: rgb(0, 0, 0);
+        }
+        .FooterItem{
+            border-right: 1px dotted white;
+            border-bottom: 1px dotted white;
+            border-top:3px dotted maroon;
+            border-radius: 50px;
+            
+        }
+        .FooterItem:hover{
+            background-color: rgba(143, 143, 143, 0.8);
+        }
+        .FooterListItem{
+            color:honeydew;
+            font-size: 18px;
+            font-family: serif;
+            margin-top: 5px;
+        }
+        .FooterListItem:hover{
+            margin-left: 40px;
+            text-decoration-line: underline;
+        }
+        .SocialMedia{
+            min-height: 200px;
+            max-height: 400px;
+            min-width: 100%;
+            align-items: center;
+            background-color: black;
+        }
+        .vm_btn{
+                border-bottom: solid 1px maroon ;
+                border-left:solid 3px maroon;
+                border-right:solid 3px maroon;
+                border-top:solid 1px maroon;
+                background: none;
+                padding: 10px 20px;
+                font-size: 20px;
+                font-family: "montserrat";
+                cursor: pointer;
+                margin: 10px;
+                transition: 2s;
+                position: relative;
+                overflow: hidden;   
+            }
+            .vm_btn1{
+                color:  black;
+                margin-top: 15px;
+                margin-left:50px
+            }
+            .vm_btn1:hover{
+                color: maroon;
+            }
+            .vm_btn::before{
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 10%;
+                background: black;
+                z-index: -1;
+                transition: 1.5s;
+            }
+            .vm_btn1::before{
+                top: 0;
+                border-radius: 0 0 50% 50%;
+            }
+            .vm_btn1:hover::before{
+                height: 180%;
+            }
+    </style>
+</head>
+<body onload="loading()" style="background-color:{{layout.title_color}}">
+        <div id="loading"></div>
+        <div><img class="CoverImage" src="/static/{{layout.title_image}}"></div>
+        <div class="SystemAbstract">
+            <div><h3 class="SystemAbstractText"><q><u>A STEP TOWARD'S AUTONOMOUS<br>FUTURE PRESENTING AUTONOMOUS<br> SERVING SYSTEM CHANGE YOUR<br>LIFE-STYLE</u></q></h5></div>
+            <!--SLIDER START-->
+            <div id="Abstract" class="carousel slide" data-ride="carousel" style="float:right;margin-top: 10px;">
+                <div class="carousel-inner">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-item active">
+                        <img class="Logo" style="height:300px;width:450px;padding: 20px;background-color: rgb(250, 250, 250);" src="/static/FypNewLogo.svg" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="Logo" src="/static/{{layout.S11}}" class="d-block w-100" alt="Image Not Found" style="padding: 5px;margin-top: 0px;">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="Logo" src="/static/{{layout.S12}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="Logo" src="/static/{{layout.S13}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="Logo" src="/static/{{layout.S14}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#Abstract" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                    <a class="carousel-control-next" href="#Abstract" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only" syle="margin-top:20px">Next</span>
+                </a>
+            </div>
+        </div>
+        <!--SLIDER END-->
+        <!--SPECIAL OFFER START-->
+        <div style="min-height: 250px;width: 100%;background-color: rgba(255, 255, 255, 0.788);margin-top: 150px;">
+        <center><h1 class="DoubleUnderline" style="letter-spacing: 2px;font-family: Impact, Charcoal, sans-serif;font-size: 30px;color: maroon;margin-top: 60px;"><strong><br>SPECIAL OFFER</strong></h1>
+        <p style="font-family: serif;font-size: 20px;color: black;margin-top: 30px;">
+            <strong>Enjoy discounts and special offers design to make your comfortable stay,more affordable</strong> 
+        </p></center>
+    </div>
+    <!--SPECIAL OFFER END-->
+    <!--FACILITIES START-->
+        <!--FACILITIES SEA-VIEW FACILITY START-->
+        <div class="Facilites">
+            <!--SLIDER START-->
+            <div id="SEA-VIEW" class="carousel slide" data-ride="carousel" style="float:right;margin-top: 10px;">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="FacilitiesImage" src="/static/{{layout.S21}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S22}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S23}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                </div>
+                <a class="carousel-control-next" href="#SEA-VIEW" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only" syle="margin-top:20px">Next</span>
+                </a>
+            </div>
+            <!--SLIDER END-->
+            <div ><center>
+                <h4 class="DoubleUnderline" style="color: maroon" ><strong><br><br><br><br>SEA-VIEW FACILITY</strong></h4>
+                <ol><strong>
+                    <li style="font-size: 18px;margin-top: 20px;list-style-type: square;margin-top: 30px;">Heated Outdoor Pool</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Fully-Equipped Fitness Center </li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Autonomous Serving </li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Complimentray Wifi Access</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Beautiful Sea-View</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Room Service </li>
+                </ol></strong></center>
+                <a href="/CustomerSignup"><button class="vm_btn vm_btn1" style="width: 200px;"><strong>&nbsp;&nbsp;&nbsp;BOOK NOW&nbsp;&nbsp;&nbsp;</strong></button></a>
+            </div>
+        </div>
+        <!--FACILITIES SEA-VIEW FACILITY END-->
+        <!--FACILITIES LUXURY FACILITY START-->
+        <div class="Luxury-Facilities Facilites">
+            <div style="margin-left: 50px;"><center>
+                <h4 class="DoubleUnderline" style="color: maroon" ><strong><br><br><br><br>LUXURY FACILITY</strong></h4>
+                <ol><strong>
+                    <li style="font-size: 18px;margin-top: 20px;list-style-type: square;margin-top: 30px;">Heated Outdoor Pool</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Fully-Equipped Fitness Center </li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Autonomous Serving </li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Complimentray Wifi Access</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Special Services</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Room Service </li>
+                </ol></strong></center>
+                <a href="/CustomerSignup"><button class="vm_btn vm_btn1" style="width: 200px;"><strong>&nbsp;&nbsp;&nbsp;BOOK NOW&nbsp;&nbsp;&nbsp;</strong></button></a>
+            </div>
+            <!--SLIDER START-->
+            <div id="LUXURY" class="carousel slide" data-ride="carousel" style="margin-top: 10px;float:right;margin-left:60px;">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S31}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S32}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item active">
+                        <img class="FacilitiesImage" src="/static/{{layout.S33}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#LUXURY" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only" syle="margin-top:20px">Previous</span>
+                </a>
+            </div>
+            <!--SLIDER END-->
+        </div>
+        <!--FACILITIES LUXURY FACILITY END-->
+        <!--FACILITIES BASIC FACILITY START-->
+        <div class="Facilites">
+            <!--SLIDER START-->
+            <div id="NORMAL" class="carousel slide" data-ride="carousel" style="float:right;margin-top: 10px;">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="FacilitiesImage" src="/static/{{layout.S41}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S42}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="FacilitiesImage" src="/static/{{layout.S43}}" class="d-block w-100" alt="Image Not Found">
+                    </div>
+                </div>
+                <a class="carousel-control-next" href="#NORMAL" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only" syle="margin-top:20px">Next</span>
+                </a>
+            </div>
+            <!--SLIDER END-->
+            <div><center>
+                <h4 class="DoubleUnderline" style="color: maroon" ><strong><br><br><br><br><br><br><br>NORMAL FACILITY</strong></h4>
+                <ol><strong>
+                    <li style="font-size: 18px;margin-top: 20px;list-style-type: square;margin-top: 30px;">Heated Outdoor Pool</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Autonomous Serving </li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">Complimentray Wifi Access</li>
+                    <li style="font-size: 18px;list-style-type: square;margin-top: 5px;">24-hour Room Service </li>
+                </ol></strong></center>
+                <a href="/CustomerSignup"><button class="vm_btn vm_btn1" style="width: 200px;"><strong>&nbsp;&nbsp;&nbsp;BOOK NOW&nbsp;&nbsp;&nbsp;</strong></button></a>
+            </div>
+        </div>
+        <!--FACILITIES BASIC FACILITY ENDS-->
+        <!--3 Reasons Start-->
+        <div class="Reasons">
+            <div></div>
+            <div><h1 style="font-family: serif;border-bottom:solid 2px maroon;"><strong><center>3 REASONS TO BOOK ONLINE</center></strong></h1></div>
+            <div></div>
+            <div>
+                <center>
+                <img src="/static/rs-icon.png" style="height:150px;width:150px;">
+                <h3>Best Rate</h3>
+                <p>We offer the best deals & the lowest rates.</p>
+              </center>
+            </div>
+            <div>
+                <center>
+                    <img src="/static/smile-icon.png" style="height:150px;width:150px;">
+                    <h3>Easy Booking</h3>
+                    <p>We make online booking simple and easy.</p>
+                </center>
+            </div>
+            <div>
+                <center>
+                    <img src="/static/lock-icon.png" style="height:150px;width:150px;">
+                    <h3>Easy & Secure</h3>
+                    <p>We ensure your personal information is safe & secure.</p>
+                </center>
+            </div>
+        </div>
+        <!--3 Reasons End-->
+        <!--FOOTER START-->
+        <div class="Footer">
+            <div class="FooterItem">
+                <h4 class="DoubleUnderline" style="color: honeydew;"><strong><br>AUTONMOUS SERVING SYSTEM</strong></h4>
+                <br><p style="color:honeydew"><q>Provide the good services and facilities<br>
+                        to the customer and also provide the<br>
+                        autonomous food serving 24-hour</q></p>
+                <br><a class="FooterListItem" href="/CustomerSignup"><i class="fas fa-circle-notch fa-0.5x"></i> Booking</a></u></li><br>
+                <a class="FooterListItem" href="/Services"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Facilities</a></u></li><br>
+                <a class="FooterListItem" href="#"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Autonomous Details</a></u></li><br>
+                <a class="FooterListItem" href="/Services"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Packages</a></u></li><br>
+                <a class="FooterListItem" href="/CustomerSignup"><i class="fas fa-circle-notch fa-0.5x"  style="margin-top: 10px;"></i> Register</a></u></li><br><br>
+            </div>
+            <div class="FooterItem">
+                <br><br><br><br><a class="FooterListItem" href="/T&S"><i class="fas fa-circle-notch fa-0.5x"></i> Term & Services</a></u></li><br>
+                <a class="FooterListItem" onclick="cookies()" style="color: white;cursor: pointer;"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Cookies</a></u></li><br>
+                <a class="FooterListItem" href="/Contact"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Contact</a></u></li><br>
+                <a class="FooterListItem" href="/Login"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i> Help</a></u></li><br>
+                <a class="FooterListItem" style="color: maroon;"><i class="fas fa-circle-notch fa-0.5x" style="margin-top: 10px;"></i>Administration Email : </a></u></li><br>
+                <a class="FooterListItem" href="https://mail.google.com/mail/?view=cm&fs=1&to=sohaibstylo03332140546@gmail.com&su=ASSCustomerContact&body=BODY">sohaibstylo03332140546@gmail.com</a></u></li><br>
+                <a class="FooterListItem" href="https://mail.google.com/mail/?view=cm&fs=1&to=anaskhan569@gmail.com&su=ASSCustomerContact&body=BODY">anaskhan569@gmail.com</a></u></li><br>
+                <a class="FooterListItem" href="https://mail.google.com/mail/?view=cm&fs=1&to=wajeehzafar101@gmail.com&su=ASSCustomerContact&body=BODY">wajeehzafar101@gmail.com</a></u></li><br>
+            </div>
+            <div class="FooterItem">
+                <h4 class="DoubleUnderline" style="color: honeydew;"><strong><br>FEEDBACK FORM</strong></h4>
+                <form method="POST" action="/Feedback" enctype="multipart/form-data"><br>
+                    <input type="email" name="email" placeholder="Enter Email"  style="border-radius: 10px;width:200px;margin-top:20px"><br>
+                    <textarea name="msg" placeholder="Enter Message" style="border-radius: 10px;width:200px;margin-top:15px;height: 100px;"></textarea><br>
+                    <input type="Submit" value="SUBMIT" style="background-color:greenyellow;margin-top: 10px;">
+                </form>
+            </div>
+        </div>
+        <!--FOOTER END-->
+        <!--Social Media-->
+        <div class="SocialMedia">
+            <center>
+            <a href="https://www.facebook.com/Autonomous-serving-system-103008321649968/" ><i class="fab fa-facebook fa-3x" style="margin-top: 25px;"></i></a>
+            <a href="https://www.instagram.com/autonomousservingsystem/" ><i class="fab fa-instagram fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+            <a href="https://twitter.com/ServingSystem" ><i class="fab fa-twitter fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sohaibstylo03332140546@gmail.com&su=ASSCustomerContact&body=BODY&bcc=anaskhan569@gmail.com" ><i class="fas fa-at fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+            <h6><u>Follow Us</u></h6>
+            <h6 style="margin-top: 60px;">Copyright © Autonomous Serving System 2020— all rights reserved</h6>
+            </center>
+        </div>
+        <!--SCROLL-TO-TOP START-->
+        <button onclick="topFunction()" id="StTB" title="Go to top"><i class="fas fa-angle-double-up"></i></button>
+    </body>
+   <!--BODY END--> 
+   <!--JSQuery-->
+<script>
+    //Get the button
+    var ScrollToTop = document.getElementById("StTB");
+    
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        ScrollToTop.style.display = "block";
+      } else {
+        ScrollToTop.style.display = "none";
+      }
+    }
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+    //loading
+    var load=document.getElementById("loading");
+
+    function loading(){
+        load.style.display="none";
+    }
+    //Cookies
+    function cookies(){
+        window.alert("\nThis website uses cookies:\nWe use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services.");
+    }
+    </script>
+    <!--SCROLL-TO-TOP END-->
+</html>
+{%endblock%}

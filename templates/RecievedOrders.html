@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="30">
+    <title>RecievedOrders</title>
+</head>
+<style>
+        .bk{
+            background-image:linear-gradient(rgb(37, 25, 1),white);
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+        .orders{
+            display: grid;
+            grid-template-columns: 400px 400px 400px;
+        }
+        .order{
+            display: grid;
+            grid-template-rows: 100px 300px;
+            height:auto;
+            max-width:300px;
+            background-color:rgba(192, 192, 192, 0.932);
+            color:rgb(0, 0, 0);
+            font-size: 18px;
+            font-family: 'Times New Roman', Times, serif;
+            margin: auto;
+            padding:10px;
+            border:5px;
+            border-color: black;
+            border-style:solid;
+            box-shadow: 5px 5px rgba(40, 43, 0, 0.705);
+            margin-top:50px;
+            border-radius: 25px;
+        }
+        .head{
+           max-width:300px;
+            height: 80px;
+            background-color:rgba(36, 18, 0, 0.877);
+            font-family: 'Times New Roman', Times, serif;
+            color:rgb(255, 255, 255);
+            font-size: 20px;
+            font-weight: bold;
+            padding:10px;
+            border:5px;
+            border-color: rgb(255, 255, 255);
+            border-style: double;
+            text-align: center;
+        }
+        @media only screen and (max-width:1200px){
+            .orders{
+                grid-template-columns: 400px 400px;
+            }
+        }
+        @media only screen and (max-width:800px){
+            .orders{
+                display:inline-block;
+            }
+        }
+</style>
+<body class="bk">
+    <div class="orders">
+        {% for i in orders %}
+        <div class="order">
+            <div class="head"><p>ORDER {{loop.index}}</p>
+            <p>
+                {% set temp=i.customerName|length %}
+                {% set lenght=temp-8%}
+                {% for l in range(lenght) %}
+                    {{i.customerName[l]}}
+                {% endfor %}
+            </p></div>
+            <div style="margin: auto;">
+                {% for items in i.order %}
+                    <p><strong>ItemName : </strong><u>{{items.itemName}}</u></p>
+                    <p><strong>Quantity : </strong><u>{{items.itemQuantity}}</u></p>
+                {% endfor %}    
+                <p style="outline-style: dashed;padding:5px;background-color: rgba(171, 253, 154, 0.678);font-weight: bold;">Status : {{i.status}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpdateBackgroundLayout</title>
+    <style>
+        .bk{
+            background-image:linear-gradient(to left,silver,white);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .grid{
+            display:grid;
+            grid-template-columns:300px 300px 300px;
+            margin-left:300px;
+        }
+        .button{
+            background-color: rgb(20, 14, 6);
+            height:120px;
+            width:200px;
+            box-shadow: -10px -5px grey;
+            color:white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top:50px;
+            text-decoration: underline;
+            text-decoration-style: double;
+            cursor: pointer;
+        }
+        .button h2{
+            padding-top: 20px;
+        }
+        .button:hover{
+            padding-left:50px;
+        }
+        @media only screen and (max-width:1200px){
+            .grid{
+                margin-left:100px;
+            }
+        }
+        @media only screen and (max-width:950px){
+            .grid{
+                grid-template-columns: 300px 300px;
+                margin-left:200px;
+            }
+        }
+        @media only screen and (max-width:750px){
+            .grid{
+                grid-template-columns: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="bk">
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;"></a><br>
+    <h1 style="text-align: center;text-decoration: underline;">UPDATE WEB TITLE LAYOUT</h1>
+    <div class="grid">
+        <a href="/UpdateLayoutTitleColour" style="text-decoration: none;"><div class="button"><h2>TITLE COLOR</h2></div></a>
+        <a href="/UpdateLayoutTitleImage"><div class="button"><h2>TITLE<br> IMAGE</h2></div></a>
+        <a href="UpdateTitleSlider"><div class="button"><h2>TITLE SLIDER</h2></div></a>
+        <a href="UpdateNormalSlider"><div class="button" style="height:150px"><h2>NORMAL PACKAGE SLIDE</h2></div></a>
+        <a href="UpdateSeaViewSlider"><div class="button" style="height:150px;"><h2>SEA-VIEW PACKAGE SLIDER</h2></div></a>
+        <a href="UpdateLuxurySlider"><div class="button" style="height:150px;"><h2>LUXURY PACKAGE SLIDER</h2></div></a>
+    </div>
+</body>
+</html>
+{% endblock %}

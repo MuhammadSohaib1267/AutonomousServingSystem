@@ -1,0 +1,144 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AdminSignup</title>
+    <style>
+        .bk{
+            margin:0;
+            padding:0;
+            width: 100%;
+            background-image:url(/static/adminSignUp.jpg);
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .login_box{
+            background-image: linear-gradient(to bottom,rgb(0, 0, 0),rgba(2, 17, 49, 0.959));
+            min-height:405px;
+            width:450px;
+            align-self:center;
+            opacity: 0.9;
+            align-items: center;
+            margin:auto;
+            display: grid;
+            grid-template-columns: 160px 150px;
+            text-align: right;
+            font-weight: bold;
+            padding: 20px;
+        }
+        .u_n{
+            font-size: 15px;
+            font-weight: normal;
+            width:220px;
+            margin-top:10px;
+        }
+        .ap{
+            display: none;
+        }
+        .back{
+            color:#ADEFD1FF;
+            margin-top:10px;
+            font-size:20px;
+            font-weight: bold;
+            border-style: double;
+        }
+        .back:hover{
+            color:teal
+        }
+        .text{
+            margin-top:10px;
+        }
+        .b{
+            margin: auto;
+            align-self: center;
+            align-items: center;
+            width: 450px;
+            background-color: rgba(24, 30, 48, 0.774);
+        }
+    </style>
+    <script>
+        function yesnoCheck(that) {
+            if (that.value == "admin") {
+                document.getElementById("adminPost").style.display = "block";
+                document.getElementById("adminPostType").style.display = "block";
+            } else {
+                document.getElementById("adminPost").style.display = "none";
+                document.getElementById("adminPostType").style.display = "none";
+            }
+        }
+        Filevalidation=() => { 
+        const fi = document.getElementById('Image'); 
+        // Check if any file is selected. 
+        if (fi.files.length > 0) { 
+            for (const i = 0; i <= fi.files.length - 1; i++) { 
+  
+                const fsize = fi.files.item(i).size; 
+                const file = Math.round((fsize / 1024)); 
+                // The size of the file. 
+                if (file >= 1024) { 
+                    alert( 
+                      "File too Big, please select a file less than 1mb"); 
+                      fi.value=""
+                } else { 
+                    document.getElementById('size').innerHTML = '<b>'
+                    + file + '</b> KB'; 
+                } 
+            } 
+        } 
+    } 
+    </script>
+</head>
+<body class="bk">
+    <center><h2 style="color:whitesmoke;text-shadow: 2px 2px rgb(233, 1, 1);font-weight: bold;">ADMIN SIGNUP</h2></center>
+    <form action="/AdminRegistration" id="adminResgistration" method="POST" autocomplete="off" enctype="multipart/form-data">
+    <div class="login_box">
+        <div class="text"><p style="font-size: 15px;color:white;">Name :  &nbsp;&nbsp;</p></div><div><input class="u_n" name="username" placeholder="Enter Name" required autofocus></div>
+        <div class="text"><p style="font-size: 15px;color:white">Age : &nbsp;&nbsp;</p></div><div><input name="age" class="u_n"  placeholder="Enter Age" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Gender : &nbsp;&nbsp;</p></div>
+        <div class="text"><select name="gender" style="font-size: 15px;font-weight: bold;width:220px;height:20px;" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" required>
+                <option value="None" style="color:red">None</option>
+                <option value="male" style="color:goldenrod">Male</option>
+                <option value="female" style="color:blue">Female</option>
+            </select></div>
+        <div class="text"><p style="font-size: 15px;color:white">Qualification : &nbsp;&nbsp;</p></div><div><input name="qualification" class="u_n"  placeholder="Enter Qualification" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Date-Of-Birth : &nbsp;&nbsp;</p></div><div><input name="dob" class="u_n" type="date" placeholder="Enter Date-Of-Birth" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Phone : &nbsp;&nbsp;</p></div>
+        <div><div class="text"><select class="selectpicker countrypicker" style="height: 15px;" data-flag="true" name="country" ></select></div>
+        <input name="phone" type="tel" class="u_n" placeholder="123-45-678" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Post : &nbsp;&nbsp;</p></div>
+        <div><select name="post" style="font-size: 15px;font-weight: bold;width:220px;height:25px;" onchange="yesnoCheck(this);">
+                <option class="u_n" style="color: red;font-size: 12px;" value="">NONE</option>
+                <option class="u_n" style="color: rgb(8, 65, 6);font-size: 12px;" value="chef">CHEF</option>
+                <option class="u_n" style="color: rgb(8, 65, 6);font-size: 12px;" value="admin">ADMIN</option>
+            </select></div>
+        <div id="adminPostType" style="color:whitesmoke;" class="ap text">Enter Post : &nbsp;&nbsp;</div><div id="adminPost" class="ap text"><input name="adminPost" class="u_n" type="text" placeholder="Enter Post"></div>
+        <div class="text"><p style="font-size: 15px;color:white">CNIC : &nbsp;&nbsp;</p></div><div><input name="cnic" type="tel" class="u_n" placeholder="#####-#####-###" required min="13" max="17"></div>
+        <div class="text"><p style="font-size: 15px;color:white">Chef-Image : </div><div><input name="Image" id="Image" type="file" onchange="Filevalidation()" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Uploaded-File-Size : &nbsp;&nbsp;</p></div><div><p style="font-size: 15px;color:white;float: left;text-decoration:underline;" id="size">0</p></div>
+        <div class="text"><p style="font-size: 15px;color:white">Password :&nbsp;&nbsp;</p></div><div><input name="pass" class="u_n" type="password" placeholder="Enter Password" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Confirm Password : &nbsp;&nbsp;</p></div><div><input name="con_pass" class="u_n" type="password" placeholder="Enter Confirm Password" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Registeration Key : &nbsp;&nbsp;</p></div><div><input name="r_key" class="u_n" type="password" placeholder="Enter Key" required></div>    
+    </div>
+    <div class="b">
+    <center>
+        <input style="font-size:20px;width:200px;margin-top:5px;font-weight:500;background-color: rgb(129, 109, 21);color: honeydew;" type="submit">
+        {% if session.md_logged_in %}
+        <a href="/AdminInquiry" style="text-decoration: none;"><h6 class="back">&#8592 BACK</h6></a>
+        {% else %}
+        <a href="/AdminPortal" style="text-decoration: none;"><h6 class="back">&#8592 BACK</h6></a>
+        {% endif %}
+    </center>
+    </div>
+    </form>
+</body>
+<script>
+    $('.countrypicker').countrypicker();
+</script>
+</html>
+{% endblock %}

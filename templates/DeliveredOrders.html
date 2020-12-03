@@ -1,0 +1,44 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivered Oreders</title>
+    <style>
+        .bk{
+            background-color: rgba(192, 192, 192, 0.719);
+        }
+        table, th, td {
+            border: 1px solid black;
+            font-weight: bold;
+            margin:auto;
+            padding: 5px;
+            text-align: center;
+        }
+        td{
+            width: 200px;
+        }
+    </style>
+</head>
+<body class="bk">
+    <a href="/ChefPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;"></a><br>
+    <div style="text-align: center;">
+    <h2 style="font-weight: bold;"><q>ORDERS ATTEMPT</q></h2>
+    </div><br><br>
+    <table>
+            <th style="background-color: black;color:white">ROOM</th>
+            <th style="background-color: black;color:white">CUSTOMER NAME</th>
+            <th style="background-color: black;color:white;">DATE</th> 
+    {% for i in data %}
+        <tr>
+            <td>{{i.room}}</td>
+            <td>{{i.customer_name}}</td>
+            <td>{{i.date}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}

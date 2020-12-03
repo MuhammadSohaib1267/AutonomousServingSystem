@@ -1,0 +1,114 @@
+{% extends "SecondLayout.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CustomerRegister</title>
+    <style>
+        .bk{
+            margin:0;
+            padding:0;
+            width: 100%;
+            background-image:url(/static/CustomerSignUpBg.jpg);
+            background-position:top center;
+            background-repeat: no-repeat;
+            margin-top:50px;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .login_box{
+            background-image: linear-gradient(to bottom,rgb(0, 0, 0),rgba(2, 17, 49, 0.959));
+            min-height:405px;
+            width:450px;
+            align-self:center;
+            opacity: 0.9;
+            align-items: center;
+            margin:auto;
+            display: grid;
+            grid-template-columns: 160px 150px;
+            text-align: right;
+            font-weight: bold;
+            padding: 20px;
+        }
+        .u_n{
+            font-size: 15px;
+            font-weight: normal;
+            width:220px;
+            margin-top:10px;
+        }
+        .back{
+            color:#ADEFD1FF;
+            margin-top:10px;
+            font-size:20px;
+            font-weight: bold;
+            border-style: double;
+        }
+        .back:hover{
+            color:teal
+        }
+        .text{
+            margin-top:10px;
+        }
+        .b{
+            margin: auto;
+            align-self: center;
+            align-items: center;
+            width: 450px;
+            background-color: rgba(24, 30, 48, 0.774);
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<body class="bk">
+    <center>
+        <h1 style="color:whitesmoke;text-shadow: 2px 2px blue;">CUSTOMER REGISTERATION</h1>
+    </center>
+    <form method="POST" action="/CustomerSignUpProcess" autocomplete="off" enctype="multipart/form-data">
+    <div class="login_box">
+        <div class="text"><p style="font-size: 15px;color:white;">Name : &nbsp;&nbsp;</p></div><div><input class="u_n" name="username" placeholder="Enter Name" required autofocus></div>
+        <div class="text"><p style="font-size: 15px;color:white">Age : &nbsp;&nbsp;</p></div><div><input name="age"class="u_n"  placeholder="Enter Age" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Gender : &nbsp;&nbsp;</p></div>
+        <div class="text"><select name="gender" style="font-size: 15px;font-weight: bold;width:220px;height:25px;" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" required>
+                <option value="None" style="color:red">None</option>
+                <option value="male" style="color:goldenrod">Male</option>
+                <option value="female" style="color:blue">Female</option>
+            </select></div>
+        <div class="text"><p style="font-size: 15px;color:white">Room Number : &nbsp;&nbsp;</p></div><div><input name="room_number" type="number" class="u_n"  placeholder="Enter Room Number" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Package  : &nbsp;&nbsp;</p></div>
+        <div class="text"><select name="package" style="font-size: 15px;font-weight: bold;width:220px;height:25px;" required>
+            <option value="None" style="color:red">None</option>
+            <option value="Luxury" style="color:goldenrod">Luxury</option>
+            <option value="SeaView" style="color:blue">SeaView</option>
+            <option value="Normal" style="color:green">Normal</option>
+        </select></div>
+        <div class="text"><p style="font-size: 15px;color:white">Date-Of-Birth : &nbsp;&nbsp;</p></div><div><input name="dob" class="u_n" type="date" placeholder="Enter Date-Of-Birth" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Phone : &nbsp;&nbsp;</p></div>
+            <div><div><select class="selectpicker countrypicker" data-flag="true" name="country" ></select></div>
+        <input name="phone" type="tel" class="u_n" placeholder="123-45-678" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">CNIC : &nbsp;&nbsp;</p></div><div><input name="cnic" type="tel" class="u_n" placeholder="#####-#####-###" required min="13" max="17"></div>
+        <div class="text"><p style="font-size: 15px;color:white">Password : &nbsp;&nbsp;</p></div><div><input name="pass" class="u_n" type="password" placeholder="Enter Password" min="6" max="15" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Confirm Password : &nbsp;&nbsp;</p></div><div><input name="con_pass" class="u_n" type="password" placeholder="Enter Confirm Password" min="6" max="30" required></div>
+        <div class="text"><p style="font-size: 15px;color:white">Registeration Key : &nbsp;&nbsp;</p></div><div><input name="r_key" class="u_n" type="password" placeholder="Enter Key" required></div>     
+    </div>
+    <div class="b">
+        <center>
+        <input style="font-size:20px;width:200px;font-weight:500;background-color: rgb(0, 170, 37);color: honeydew;" type="submit" >
+        {% if session.admin_logged_in %}
+            <a href="/AdminPortal" style="text-decoration: none;font-size: 20px;"><h6 class="back">&#8592 BACK</h6></a>
+        {% else %}
+            <a href="/" style="text-decoration: none;font-size: 20px;"><h6 class="back">&#8592 BACK</h6></a>
+        {% endif %}
+    </center>
+    </div>
+    </form>
+</body>
+<script>
+    $('.countrypicker').countrypicker();
+</script> 
+</html>
+{%endblock%}

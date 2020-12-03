@@ -1,0 +1,222 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carts</title>
+    <style>
+        .bk{
+            background-image: url("/static/cart.jpg");
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .g{
+            display: grid;
+            grid-template-columns: 300px 300px 300px 300px;
+            align-items: center;
+            margin-left:50px;  
+        }
+        .items{
+            background-color:rgba(73, 86, 87, 0.514);
+            box-shadow: 5px 5px rgb(80, 79, 79);
+            padding:20px;
+            width:200px;
+            margin-top:30px;
+        }
+        .item{
+            color:white;
+            width:130px;
+        }
+        .link{
+            display:block;
+            color:white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 20px;
+            width: 30%;
+            margin:auto;
+            border-radius: 20px;
+        }
+        .link:hover{
+            color:teal;
+            background-image: linear-gradient(grey,white);
+        }
+        .submit{
+            background-color: rgb(121, 18, 0);
+            max-height:100px;
+            margin-top:20px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 2px 2px teal;
+            border-color: teal;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .submit:hover{
+            background-color: teal;
+        }
+        .total{
+            background-color: rgba(0, 68, 68, 0.466);
+            margin-top: 50px;
+            margin:auto;
+            width:500px;
+            height: auto;
+            padding:20px;
+            border-style:ridge;
+            border-color: rgba(0, 25, 39, 0.788);
+            margin-bottom: 20px;
+            color:white;
+            box-shadow: 0 2px 4px #000;
+            position: relative;
+            transform: scale(0.9);
+            transition: .1s;
+            margin-top:20px;
+            text-align: center;
+        }
+
+        .total:hover {
+        transform: scale(1);
+        box-shadow: 0 2px 4px #000, 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .total:hover:before,
+        .total:hover:after {
+        position: absolute;
+        content: "";
+        background: linear-gradient(90deg, #ddd 40%, transparent 40%);
+        top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+        z-index: 1;
+        border-radius: 4px;
+        background-size: 200% 4px;
+        background-repeat: no-repeat;
+        filter: drop-shadow(0 0 8px #fff);
+        background-position: 80% 0;
+        }
+
+        .total:hover:before {
+        animation: beforeLineAnim 2s linear infinite;
+        }
+
+        @keyframes beforeLineAnim {
+        45%,
+        50% {
+            background-position: -100% 0;
+        }
+        45% {
+            transform: scale(1)
+        }
+        50%,
+        95% {
+            transform: scale(1, -1)
+        }
+        95% {
+            background-position: 80% 0
+        }
+        }
+        @media only screen and (max-width:1200px){
+            .g{
+            grid-template-columns: 300px 300px 300px;
+            }  
+        }
+        @media only screen and (max-width:900px){
+            .g{
+            grid-template-columns: 300px 300px;
+            }
+            .link{
+                display: inline-block;
+                margin-left:100px;
+            }
+            .total{
+                width:300px;
+                margin-left:50px;
+            }  
+        }
+        @media only screen and (max-width:600px){
+            .g{
+            display: inline;
+            
+            }
+            .items{
+                margin-left:100px;
+            }
+            .bk{
+                background-color: black;
+            }
+            .link{
+                display: inline-block;
+                margin-left:100px;
+            }
+            .total{
+                width:300px;
+                margin-left:50px;
+            }  
+        }        
+    </style>
+</head>
+
+<body class="bk">
+<div class="g">
+    {% for i in items %}
+<div class="items">
+    <img src="/static/FypNewLogo.svg" height="60px" width="160px">
+    <div class="item">
+        <h3 style="text-decoration:underline;text-decoration-style: dashed;">{{i.itemName}}</h3>
+        <h3>US: {{i.itemPrice}}$</h3>
+        <h3>Quantity: {{i.itemQuantity}}</h3>
+        <div style="display: grid;grid-template-columns: 50px 50px;">
+        <form action="/QuantityIncrement" id="increment" method="POST">
+            <input type="hidden" name="itemName" value="{{i.itemName}}">
+            <div style="color:white;padding: 10px;"><button onclick="this.form.submit();" style="background-color:rgba(73, 86, 87, 0.514);"><i class="fas fa-plus"></i></button></div>
+        </form>
+        <form action="/QuantityDecrement" id="decrement" method="POST">
+            <input type="hidden" name="itemName" value="{{i.itemName}}">
+            <div style="color:white;padding: 10px;"><button onclick="this.form.submit();" style="background-color:rgba(73, 86, 87, 0.514);"><i class="fas fa-minus"></i></button></div>
+        </form>
+        </div>
+    </div>
+    <div class="item">
+        <form action="/removeItem" method="POST">
+            <input type="hidden" name="itemName" value={{i.itemName}} >
+            <input type="hidden" name="itemPrice" value={{i.itemPrice}}>
+            <input type="hidden" id="quantity" name="itemQuantity" value={{i.itemQuantity}}>
+            <center><input type="submit" class="submit" value=" <- DELETE"></center>
+        </form>
+    </div>
+</div>
+    {%endfor%}
+</div>
+    <div class="total">
+    <h1><i class="fas fa-shopping-cart"></i> TOTAL : {{total}}$</h1>
+    </div>
+        <div>
+            <a href="/orderConfirm"><button class="link" style="background-color: rgb(0, 68, 68);">CONFIRM</button></a>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="/clearCart"><button class="link" style="background-color: rgb(128, 20, 1);">CLEAR</button></a>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="/OrderNow"><button class="link" style="background-color: rgb(10, 75, 2);">Continues Adding Items</button></a>
+        </div>
+        {% if session.normal %}
+        <div style="margin-top: 20px;">
+            <a href="/CustomerNormalPortal"><button class="link" style="background-color: rgba(88, 236, 69, 0.616);"><i class="fas fa-home" fill="white"></i></button></a>
+        </div>
+        {% elif session.seaview %}
+        <div style="margin-top: 20px;">
+            <a href="/CustomerSeaViewPortal"><button class="link" style="background-color: rgba(177, 151, 7, 0.719);"><i class="fas fa-home" fill="white"></i></button></a>
+        </div>
+        {% elif session.luxury %}
+        <div style="margin-top: 20px;">
+            <a href="/CustomerLuxuryPortal"><button class="link" style="background-color:rgba(64, 224, 208, 0.719);"><i class="fas fa-home" fill="white"></i></button></a>
+        </div>
+        {% endif %}
+        <br><br>
+</body>
+</html>
+{% endblock %}

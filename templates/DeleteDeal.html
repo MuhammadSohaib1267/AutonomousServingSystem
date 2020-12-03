@@ -1,0 +1,141 @@
+{% extends 'Secondlayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeleteDeal</title>
+</head>
+<style>
+    body{
+        background: linear-gradient(rgb(37, 25, 1),white);;
+        background-color:#000000;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment:fixed;
+        }
+        .area{
+        display: grid;
+        grid-template-columns: 300px 300px 300px 300px;
+        align-items: center;
+        margin-left:50px
+        }
+        .card {
+        display: grid;
+        grid-template-columns: 219px;
+        grid-template-rows: 150px 180px;
+        grid-template-areas: "image" "text";
+        border-radius: 10px;
+        background: white;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-align: center;
+        transition: 0.5s ease;
+        cursor: pointer;
+        margin:40px;
+        max-width: 250px;
+        }
+        .card-image {
+        grid-area: "image";
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        }
+        .card-text {
+        grid-area: "text";
+        background-size: cover;
+        text-align: center;
+        max-width: 350px;
+        margin:5px;
+        }
+        .card-text .date {
+        color: rgb(51, 44, 27);
+        font-size:13px;
+        }
+        .card-text p {
+        color: grey;
+        font-size:15px;
+        font-weight: 300;
+        }
+        .card-text h2 {
+        margin-top:0px;
+        font-size:20px;
+        }
+        .card:hover {
+        transform: scale(1.15);
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+        }
+        .Delete{
+            background-color:rgb(255, 4, 4);
+            color:white;
+            max-width: 150px;
+            max-height:50px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            padding: 3px;
+            position: relative;
+            margin-top: none;
+            margin-left: 10px;
+            font-size:20px;
+        }
+    .r{
+        width:30%;
+        height:40px;
+        color:rgb(255, 255, 255);
+        background-color: red;
+        border-radius: 30px;
+        left: 50%;
+        display: block;
+        margin:auto;
+        font-weight: bold;
+        font-size: 20px;
+        margin-top:50px;
+        border-style: groove;
+    }
+    .r:hover{
+        background-image: linear-gradient(rgb(114, 113, 113),white);
+        color:black;
+        border-color:rgb(41, 41, 41);
+    }
+        @media only screen and (max-width:1200px){
+            .area{
+                grid-template-columns: 300px 300px 300px;
+            }}
+        @media only screen and (max-width:900px){
+            .area{
+                grid-template-columns: 300px 300px;
+            }}
+        @media only screen and (max-width:600px){
+            .area{
+                display:inline-block;
+                margin-left: 100px;
+            }
+            .b{
+                background-color: black;
+            }
+            } 
+</style>
+<body>
+    <div class="area">
+        {% for i in deals %}
+        <div class="card" >
+            <div class="card-image">
+                <img src="{{url_for('file',filename=i['deal_image'])}}" style="border-radius: 20px;" alt="ImageNotFound" height="100%" width="100%">
+            </div>
+            <div class="card-text" id="ct">
+            <form action="/DeleteProcess" method="Post">
+              <h2>{{i.deal_name}}</h2>
+              <p>{{i.description}}</p>
+              <h5 style="font-weight: bold;">Price : {{i.price}}$</h5>
+                <input type="hidden" name="deal_name" value="{{i.deal_name}}"></input>
+                <input type="hidden" name="description" value="{{i.description}}"></input>
+                <input type="hidden" name="price" value="{{i.price}}"></input>
+                <button onclick="this.form.submit()" class="Delete">DELETE</button>
+            </form>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        <a href="/ChefPortal" style="text-decoration: none;"><button class="r" >RETURN</button></a>  
+</body>
+</html>
+{% endblock %}

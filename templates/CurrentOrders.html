@@ -1,0 +1,109 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="30">
+    <title>CurrentOrders</title>
+    <style>
+        .bk{
+            background-image:linear-gradient(rgb(37, 25, 1),white);
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .orders{
+            display: grid;
+            grid-template-columns: 400px 400px 400px;
+            margin-top: 50px;
+        }
+        .order{
+            display: grid;
+            grid-template-rows: 100px auto 60px;
+            height:auto;
+            width:auto;
+            background-color:white;
+            color:rgb(0, 0, 0);
+            font-size: 18px;
+            font-family: 'Times New Roman', Times, serif;
+            margin: auto;
+            padding:10px;
+            border:5px;
+            border-color: black;
+            border-style:solid;
+            box-shadow: 3px 3px rgba(167, 166, 166, 0.589);
+        }
+        .head{
+            background-color: aqua;
+            margin: auto;
+            padding: 20px;
+            border:2px;
+            border-color: rgb(2, 92, 92);
+            border-style: solid;
+        }
+        .recieve{
+            background-color:rgb(107, 255, 87);
+            margin:"auto";
+            width:100%;
+            height:60px;
+            font-size:18px;
+            color:green;
+            text-align: center;
+            cursor:pointer;
+            border:2px;
+            border-style:outset;
+        }
+        .recieve:hover{
+            background-color: green;
+            color:rgb(107, 255, 87);
+        }
+        @media only screen and (max-width:1200px){
+            .orders{
+                grid-template-columns: 400px 400px;
+            }
+        }
+        @media only screen and (max-width:800px){
+            .orders{
+                display:inline-block;
+            }
+        }          
+    </style>
+</head>
+<body class="bk">
+    <div class="orders">
+        {% for order in data %}
+        <div class="order">
+            <div class="head"><h1>ORDER : {{loop.index}}</h1></div>
+            <div style="font-size: 20px;margin-top:20px;">
+                {% set temp=order.customerName|length %}
+                {% set lenght=temp-8%}
+                <strong><p>Customer : 
+                {% for l in range(lenght) %}
+                    {{order.customerName[l]}}
+                {% endfor %}
+                </p></strong>
+                {% for i in order.order%}
+                <p>ItemName : {{i.itemName}}</p>
+                <p>Quantity : {{i.itemQuantity}}</p>
+                {% endfor %}
+                <h3 style="outline-style: solid;">&nbsp;Room Number : {{order.room_number}}</h3>
+            </div>
+            <form action="/RecieveOrder" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="customerName" value="{{order.customerName}}"> 
+                <input type="hidden" name="items" value="{{order.order}}">
+                <input type="hidden" name="rn" value="{{order.room_number}}">
+                <input type="hidden" name="date" value="{{order.date}}">
+                <input type="hidden" name="time" value="{{order.time}}">    
+            <button onclick="this.form.submit()" class="recieve"><div>
+                <h3 >RECIEVE</h3>
+            </div></button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

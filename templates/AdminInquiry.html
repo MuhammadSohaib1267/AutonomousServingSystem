@@ -1,0 +1,71 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer I</title>
+    <style>
+        .bk{
+            background-color: rgba(192, 192, 192, 0.719);
+        }
+        table, th, td {
+            border: 1px solid black;
+            font-weight: bold;
+            margin:auto;
+            padding: 5px;
+            text-align: center;
+        }
+        td{
+            width: 200px;
+        }
+    </style>
+</head>
+<body class="bk">
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;"></a><br>
+    <div style="text-align: center;">
+    <h2 style="font-weight: bold;"><q>ADMIN INQUIRY</q></h2>
+    <form action="/AdminSearch" method="POST" enctype="multipart/form-data" style="float: right;">
+        <input type="text" name="search" placeholder="Name/Username"><input type="submit" value="SEARCH" style="background-color: greenyellow;font-weight: bold;">
+    </form>
+    </div><br><br>
+    <table>
+            <th style="background-color: black;color:white">ID</td>
+            <th style="background-color: black;color:white">Name</td>
+            <th style="background-color: black;color:white;">CNIC</td>
+            <th style="background-color: black;color:white;">CELL</td>
+            <th style="background-color: black;color:white;">POST</td>
+            <th style="background-color: black;color:white;">GENDER</td>
+            <th style="background-color: black;color:white;">QUALIFICATION</td>
+            <th style="background-color: black;color:white;">COUNTRY</td>
+            <th style="background-color: black;color:white;">DATE OF JOIN</td>
+            <th style="background-color: black;color:white;">TERMINATE</td>  
+        
+    {% for i in data %}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.username}}</td>
+            <td>{{i.cnic}}</td>
+            <td>{{i.phone_number}}</td>
+            <td>{{i.post}}</td>
+            <td>{{i.gender}}</td>
+            <td>{{i.qualification}}</td>
+            <td>{{i.country}}</td>
+            <td>{{i.date_of_register}}</td>
+            <form action="/TerminateAdmin" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{i.id}}">
+                <input type="hidden" name="username" value="{{i.username}}">
+                <input type="hidden" name="cnic" value="{{i.cnic}}">
+                <input type="hidden" name="post" value="{{i.post}}">
+                <td><button onclick="this.form.submit()"><i class="fas fa-times" style="color:red"></i></td></button>
+                </form>
+        </tr>
+    {% endfor %}
+    </table>
+    <center>
+        <a href="/AdminSignup" style="text-decoration: none;color:black;"><button style="padding: 10px;background-color:greenyellow;border-radius:50px;margin-top:50px;font-weight:bold;">Admin Registration</button></a>
+    </center>
+</body>
+</html>
+{% endblock %}

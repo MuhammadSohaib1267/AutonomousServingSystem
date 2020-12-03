@@ -1,0 +1,134 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .navbar-nav{
+      align-items: center;
+      display: flex;
+    }
+    .home{
+      margin-left: 430px;
+    }
+    @media only screen and (max-width:1100px){
+      .home{
+        margin-left: 250px;
+      }
+    }
+    @media only screen and (max-width:1000px){
+      .home{
+        margin-left: 0px;
+      }
+    }
+    .btn:hover{
+      color: black;
+    }
+    .dropdown-item:active{
+      background-color: rgba(128, 0, 0, 0.692);
+    }
+    .nav_alt{
+      margin:0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: rgb(0, 0, 0);
+      opacity: 0.5;
+      position: fixed;
+    }
+  </style>
+</head>
+<body>
+<nav id="Navbar" class="nav_alt navbar navbar-expand-lg fixed-top" >
+    <a><img src="/static/FypNewLogo.svg" alt="Logo" style="width:60px;background-color: white;"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color:rgb(75, 75, 75)">
+      <span class="navbar-toggler-icon"></span>Toggle
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="justify-content: center;">
+          {% if session.md_logged_in %}
+          <li class="nav-item">
+            <a class="nav-link NavbarButton home active" href="/MDPortal" style="color:rgb(199, 199, 199);padding-right: 10px;">HOME |</a>
+          </li>          
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link NavbarButton home active" href="/" style="color:rgb(199, 199, 199);padding-right: 10px;">HOME |</a>
+            </li>
+            {% endif %}
+            {% if session.services or session.contact %}
+            <li></li>
+            {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle NavbarButton" id="navbardrop" data-toggle="dropdown" style="color:rgb(199, 199, 199);cursor: pointer;">
+                PACKAGES 
+              </a>
+              <div class="dropdown-menu" >
+                <a class="dropdown-item" style="cursor: pointer;" onclick="NormalPackagesFunction()">Normal</a>
+                <a class="dropdown-item" style="cursor: pointer;"  onclick="SeaViewPackagesFunction()">Sea-View</a>
+                <a class="dropdown-item" style="cursor: pointer;" onclick="LuxuryPackagesFunction()">Luxury</a>
+              </div>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link NavbarButton" href="/Login" style="color:rgb(199, 199, 199);padding-right: 10px;">|&nbsp;&nbsp;&nbsp;&nbsp;HELP |</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle NavbarButton" id="navbardrop" data-toggle="dropdown" style="color:rgb(199, 199, 199);cursor: pointer;">
+                ABOUTS 
+              </a>
+              <div class="dropdown-menu" >
+                <a class="dropdown-item" style="cursor: pointer;" href="/Services">SERVICES</a>
+                <a class="dropdown-item" style="cursor: pointer;" href="/Contact">CONTACTS</a>
+              </div>
+            </li>
+          </ul>
+          {% if session.md_logged_in %}
+          {% else %}
+            <ul class="nav navbar-nav navbar-right" style="float:right;">
+              <li><a href="CustomerSignup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+              <li data-toggle="modal" data-target="#exampleModalCenter"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+           {% endif %}
+          
+    </div>
+  </nav>
+  <!--Modal-->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" onclick="history.go(0)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">SELECT USER</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="history.go(0)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <center>
+          <a href="/AdminLogin" ><button type="button" class="btn btn-primary" style="width: 300px;">ADMIN LOGIN</button></a><br><br>
+          <a href="/CustomerLogin"><button type="button" class="btn btn-secondary" style="width: 300px;">CUSTOMER LOGIN</button></a>
+        </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="history.go(0)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+  <script>
+    //Get the button
+    var ScrollToTop = document.getElementById("StTB");
+
+    function NormalPackagesFunction(){
+      document.body.scrollTop = 2850;
+      document.documentElement.scrollTop = 2850;
+    }
+    function SeaViewPackagesFunction(){
+      document.body.scrollTop = 1600;
+      document.documentElement.scrollTop = 1600;
+    }
+    function LuxuryPackagesFunction(){
+      document.body.scrollTop = 2250;
+      document.documentElement.scrollTop = 2250;
+    }
+    </script>
+</html>

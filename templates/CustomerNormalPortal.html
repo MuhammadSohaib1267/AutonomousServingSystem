@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerPortal</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <style>
+        .b{
+            margin:0;
+            padding:0;
+            width: 100%;
+            background-image:url(/static/TypeNormalPortal.jpg);
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .area{
+        display: grid;
+        grid-template-columns: 400px 400px 400px;
+        }
+        .card {
+        display: grid;
+        grid-template-columns: 300px;
+        grid-template-rows: 210px 210px 80px;
+        grid-template-areas: "image" "text" "stats";
+        border-radius: 18px;
+        background: white;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        text-align: center;
+        transition: 0.5s ease;
+        cursor: pointer;
+        margin:40px;
+        max-width: 300px;
+        }
+        .card-image {
+        grid-area: "image";
+        }
+        .card-text {
+        grid-area: "text";
+        }
+        .card-stats {
+        grid-area: "stats"; 
+        }
+        .card-image {
+        grid-area: "image";
+        background: url(/static/special-room-1.JPG);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        background-size: cover;
+        }
+        .card-text {
+        grid-area: "text";
+        margin: 25px;
+        }
+        .card-text .date {
+        color: rgb(51, 44, 27);
+        font-size:13px;
+        }
+        .card-text p {
+        color: grey;
+        font-size:15px;
+        font-weight: 300;
+        }
+        .card-text h2 {
+        margin-top:0px;
+        font-size:28px;
+        }
+        .card-stats {
+        grid-area: "stats"; 
+        display: inline-block;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        background: rgb(49, 40, 26);
+        }
+        .card-stats .stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        color: white;
+        padding:10px;
+        }
+        .card:hover {
+        transform: scale(1.15);
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+        }
+        /*FLIPING CARD*/
+        .flip_middle{
+        transform: translate(0%,0%);
+        }
+        .flip_card{
+        cursor: pointer;
+        min-width: 350px;
+        min-height: 400px;
+        }
+        .flip_front,.flip_back{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        backface-visibility: hidden;
+        position: absolute;
+        transition: transform .6s linear;
+        }
+        .flip_front{
+        transform: perspective(600px) rotateY(0deg);
+        }
+        .flip_back{
+        background-color: rgb(49, 40, 26);
+        transform: perspective(600px) rotateY(180deg);
+        }
+        .flip_back-content{
+        color: #2c3e50;
+        width: 100%;
+        }
+        .flip_card:hover > .flip_front{
+        transform: perspective(600px) rotateY(-180deg);
+        }
+        .flip_card:hover > .flip_back{
+        transform: perspective(600px) rotateY(0deg);
+        }
+        .t{
+            color:whitesmoke;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        /*Floating Button*/
+        #signout{
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-image: linear-gradient(black,maroon);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        #signout:hover {
+        background-image: linear-gradient(black,blue);
+        color:ghostwhite;
+        }
+        @media only screen and (max-width:1200px){
+            .area{
+                display: inline-block;
+            }}
+    </style>
+</head>
+<body class="b">
+    <div style="background-color: springgreen;text-align: center;font-size:20px;">
+    {%include 'includes/messages.html' %}
+    </div>
+    <div class="area">
+    <a href="/OrderNow" style="text-decoration: none;">
+    <div class="card" >
+        <div class="card-image" style="background: url(/static/order_food.jpg);background-size:cover;"></div>
+        <div class="card-text">
+          <h2>ORDER NOW</h2>
+          <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+        </div>
+        <div class="card-stats">
+            <center><h3 style="color: azure;">24-HOUR SERVICE</h3></center>
+        </div>
+      </div></a>
+      <a href="/ordersDetails" style="text-decoration: none;">
+      <div class="card">
+        <div class="card-image" style="background: url(/static/ordered_details.jpg);background-size:cover;"></div>
+        <div class="card-text">
+          <h2>ORDERS DETAILS</h2>
+          <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+        </div>
+        <div class="card-stats">
+            <center><h3 style="color: azure;">ORDERED ITEMS</h3></center>
+        </div>
+      </div></a>
+      <a href="/Cart" style="text-decoration: none;">
+      <div class="card">
+        <div class="card-image"  style="background: url(/static/customer_cart.gif);background-size:cover;"></div>
+        <div class="card-text">
+          <h2>CART</h2>
+          <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+        </div>
+        <div class="card-stats">
+            <center><h3 style="color: azure;">ADDED ITEMS</h3></center>
+        </div>
+      </div></a>
+    </div>
+    <div class="area" style="margin-bottom: 50px;">
+        <div class="flip_card flip_middle">
+            <div class="flip_front">
+                <div class="card">
+                    <div class="card-image" style="background: url(/static/contact.gif);background-size:cover;"></div>
+                    <div class="card-text">
+                      <h2>CONTACT US</h2>
+                      <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+                    </div>
+                    <div class="card-stats">
+                        <center><h3 style="color: azure;">HELP CENTER</h3></center>
+                    </div>
+                  </div>
+            </div>
+            <div class="flip_back">
+              <div class="flip_back-content flip_middle">
+                    <h2 class="t">CONTACT DETAILS</h2><br><br><br>
+                    <center>
+                    <h5 class="t">Reception Number 1 : ###</h5>
+                    <h5 class="t">Reception Number 1 : ###</h5>
+                    <h5 class="t">Reception Number 1 : ###</h5>
+                    <h5 class="t">Reception Number 1 : ###</h5>
+                    <h5 class="t">Reception Number 1 : ###</h5>
+                    <a href="##"><i class="fab fa-facebook fa-3x" style="margin-top: 25px;"></i></a>
+                    <a href="##"><i class="fab fa-instagram fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+                    <a href="##"><i class="fab fa-twitter fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sohaibstylo03332140546@gmail.com&su=ASSCustomerContact&body=BODY&bcc=anaskhan569@gmail.com" ><i class="fas fa-at fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+                    </center>
+              </div>
+            </div>
+          </div>
+          <a href="/billing" style="text-decoration: none;">
+        <div class="card">
+            <div class="card-image" style="background: url(/static/billing.gif);background-size:cover;"></div>
+            <div class="card-text">
+              <h2>BILLING</h2>
+              <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+            </div>
+            <div class="card-stats">
+                <center><h3 style="color: azure;">BILLING DETAILS</h3></center>
+            </div>
+          </div></a>
+          <div class="flip_card flip_middle">
+            <div class="flip_front">
+                <div class="card">
+                  {% if data.gender=="male" %}
+                    <div class="card-image" style="background: url(/static/male.png);background-size:cover;background-color: aqua;"></div>
+                  {% endif %}
+                  {% if data.gender=="female" %}
+                  <div class="card-image" style="background: url(/static/Female.png);background-size:cover;background-color: pink;"></div>
+                  {% endif %}
+                  {% if data.gender=="none" %}
+                  <div class="card-image" style="background: url(/static/blank.jpg);background-size:cover;background-color: black;"></div>
+                  {% endif %}
+                  
+                    <div class="card-text">
+                      <h2>PERSONAL</h2>
+                      <p>Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+                    </div>
+                    <div class="card-stats">
+                        <center><h3 style="color: azure;">PERSONAL DETAILS</h3></center>
+                    </div>
+                  </div>
+            </div>
+            <div class="flip_back">
+              <div class="flip_back-content flip_middle">
+                    <h2 class="t">PERSONAL DETAILS</h2><br><br><br>
+                    <ul class="t">
+                        <li>Username : <u>{{data.username}}</u></li><br>
+                        <li>Age : <u>{{data.age}}</u></li><br>
+                        <li>Data-of-Birth  : <u>{{data.date_of_birth}}</u></li><br>
+                        <li>Contact : <u>{{data.phone_number}}</u></li><br>
+                        <li>Room Number : <u>{{data.room_number}}</u></li><br>
+                        <li>Date-of-Registered : <u>{{data.date_of_register}}</u></li>
+                    </ul>
+              </div>
+            </div>
+          </div>
+    </div>
+    <a href="/CustomerSignout"><button id="signout" title="SignOut" style="font-family:Euclid Fraktur;"><i class="fas fa-sign-out-alt"></i>  SignOut</button></a>
+</body>
+</html>

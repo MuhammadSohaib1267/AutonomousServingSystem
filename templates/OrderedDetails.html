@@ -1,0 +1,74 @@
+{%extends 'SecondLayout.html'%}
+{%block body%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orderd Detail</title>
+    <style>
+        .b{
+            background-image:url(/static/orderedDetails.jpg);
+            background-position:top center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .shadow {
+        -moz-box-shadow:    5px 50px #224edd;
+        -webkit-box-shadow: 5px 50px #224edd;
+        box-shadow:         5px 50px #224edd;
+        }
+        .gv{
+            display: grid;
+            grid-template-columns: 400px 400px 400px;
+        }
+        .block{
+            max-width:300px;
+            min-width: 100px;
+            height:400px;
+            background-color: rgb(109, 109, 109);
+            border:rgb(174, 182, 182);
+            margin-left: 50px;
+            border-radius: 100px;
+            border-style: outset;
+            border-width: thick;
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        .block:hover{
+            background-image:linear-gradient(rgb(114, 109, 109),white);
+        }
+        .block h2{
+            color:whitesmoke;
+            font-size:30px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-shadow:2px 4px blue;
+            margin-top:20px;
+            margin-bottom: 50px;
+        }
+        .block p{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size:20px;
+            color:black;
+            text-decoration-line: underline;
+            text-decoration-style: double;
+        }
+    </style>
+</head>
+<body class="b">
+    <div class="gv">
+    {% for order in orders %}
+    <div class="block shadow">
+        <h2>{{order.itemName}}</h2>
+        <p>Price : {{order.itemPrice}}</p>
+        <p>Quantity {{order.itemQuantity}}</p>
+        <p>Date : {{order.date}}</p>
+        <p>Time : {{order.time}}</p>
+    </div>
+    {% endfor %}
+    </div>
+</body>
+</html>
+{%endblock%}

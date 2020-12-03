@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Address</title>
+    <style>
+        .bk{
+            background-color: rgba(192, 192, 192, 0.719);
+            padding: none;
+            padding: none;
+        }
+        table, th, td {
+            border: 1px solid black;
+            font-weight: bold;
+            margin:auto;
+            padding: 5px;
+            text-align: center;
+        }
+        td{
+            width: 200px;
+        }  
+        th{
+            background-color: black;
+            color:white;
+        } 
+    </style>
+    <script>
+        function elevatorCheck(that,temp){
+            if(that.value=="elevator"){
+                document.getElementById(temp).value="wait";
+            }
+            else{
+                document.getElementById(temp).value="";
+            }
+        }
+    </script>
+</head>
+<body class="bk">
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;"></a>
+    <center><br><br>
+    <h1>{{room}}</h1>
+    <form action="/Turns" method="POST" enctype="multipart/form-data">
+        <input type="text" name="number_of_turns" placeholder="ENTER NUMBER OF TURNS" style="width: 200px;height:30px;">
+        <input type="submit" style="background-color: green;color: white;height:35px;width:80px;">
+    </form>
+    </center><br><br><br>
+    <table>
+            <th>TURN</th>
+            <th>DISTANCE(m)</th>
+        <form action="/UpdateAddress" method="POST" enctype="multipart/form-data">
+        {% for i in turns %}
+        <tr>
+            <td>
+                <select name="turn{{i}}" onchange="elevatorCheck(this,'turn{{i}}');">
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                    <option value="forward">Forward</option>
+                    <option value="backward">Backward</option>
+                    <option value="elevator">Elevator</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" id="turn{{i}}" name="turn_{{i}}_distance" placeholder="meters" required>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <center>
+        <input type="SUBMIT" style="padding: 10px;color:white;background-color: green;width: 100px;margin: auto;font-weight: bold;border-radius: 20px;margin-top: 10px;" value="UPDATE">
+    </center>
+    </form>
+</body>
+</html>

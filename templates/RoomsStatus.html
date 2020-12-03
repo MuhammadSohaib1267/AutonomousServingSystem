@@ -1,0 +1,66 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+    <style>
+        .bk{
+            background-color: rgba(192, 192, 192, 0.719);
+        }
+        table, th, td {
+            border: 1px solid black;
+            font-weight: bold;
+            margin:auto;
+            padding: 5px;
+            text-align: center;
+        }
+        td{
+            width: 200px;
+        }
+        .ra{
+            background-color: rgba(46, 31, 10, 0.425);
+            color:black;
+            padding: 10px;
+            margin-top: 10px;
+            border-style:ridge;
+            font-weight: bold;
+        }
+        .ra:hover{
+            border-color: rgba(0, 0, 0, 0.336);
+            background-color: green;
+            color:white;
+        }
+    </style>
+</head>
+<body class="bk">
+    {% if session.md_logged_in %}
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;"></a>
+    {% elif session.admin_logged_in %}
+    <img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:0;padding:none;">
+    {% endif %}
+    <div style="text-align: center;"><br><br>
+    <h2 style="font-weight: bold;"><q>ROOMS STATUS</q></h2><br>
+    <table>
+            <th style="background-color: black;color:white">ROOM</td>
+            <th style="background-color: black;color:white">STATUS</td> 
+    {% for i in data %}
+        <tr>
+            {% if loop.index <=2 %}
+            {% else %}
+            <td>{{i}}</td>
+            <td>{{data[i]}}</td>
+            {%endif%}
+        </tr>
+    {% endfor %}
+    </table>
+    {% if session.md_logged_in %}
+    <a href="/RoomsAddresses" style="text-decoration:none;"><button class="ra">Room Addresses</button></a>
+    {% elif session.admin_logged_in %}
+    <a href="/AdminPortal" style="text-decoration:none;"><button class="ra">HOME</button></a>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

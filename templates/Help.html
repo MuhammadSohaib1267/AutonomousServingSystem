@@ -1,0 +1,127 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website</title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: calibri;
+            background-color: rgb(209, 209, 209);
+        }
+        .con{
+            width:350px;
+            height:550px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        #head{
+            width:400px;
+            height:60px;
+            background-color: #20190b;
+            border-bottom: rgb(116, 116, 116) 5px solid;
+            border-top:rgb(116, 116, 116) 5px solid;
+        }
+        #body{
+            width:400px;
+            height:450px;
+            overflow-y: auto;
+            background-color: white;
+    
+        }
+        #btm{
+            width:400px;
+            height:60px;
+            background-color: #20190b;
+            border-bottom: rgb(116, 116, 116) 5px solid;
+            border-top:rgb(116, 116, 116) 5px solid;
+        }
+        #text{
+            width:80%;
+            outline: none;
+            border:none;
+            padding: 10px;
+            border-radius: 50px;
+            margin-top:7px;
+            margin-left: 10px;
+
+        }
+        img{
+            width:40px;
+            height:40px;
+            border-radius:50px;
+            margin-top: 5px;
+            margin-left: 10px;
+            background-color:black;
+        }
+        h1{
+            margin-top: -45px;
+            margin-left: 55px;
+            color:white;
+            font-size: 25px;
+        }    
+        h3{
+            margin-top: -5px;
+            margin-left: 55px;
+            color:white;
+            font-size: 15px;
+        }
+        #user1{
+            padding: 10px;
+            float:left;
+            margin:5px;
+            max-width:90%;
+            display: table;
+            clear:both;margin-left: 15px;
+            background-color:#edefed;
+            border-radius:10px;
+        }
+        #user2{
+            padding: 10px;
+            float:right;
+            max-width:70%;
+            background-color: #0077fb;
+            border-radius:10px;
+            margin:5px;
+            color:white;
+            margin-right: 15px;
+            display: table;
+            clear:both;
+        }
+    </style>
+</head>
+<body>
+<div class="con">
+    <div id="head">
+        <img src="/static/FypNewLogo.svg" style="background-color: white;width:60px">
+        <h1 style="margin-left:80px">Autonomous Serving System</h1><h3 style="margin-left:80px">Online</h3>
+    </div>
+    <div id="body">
+        <div id="user1">Hello</div>
+        <div id="user1">How may i can help you?</div>
+        {% for d in data %}
+        {% if loop.index is even %}
+        <div id="odd"><div id="user1">{{d}}</div></div>
+        {% else %}
+        <div id="even"><div id="user2">{{d}}</div></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div id="btm">
+        <form action="/SentMessage" method="POST" enctype="multipart/form-data">
+            <input type="text" id="text" name="message" placeholder="Enter your Message..." autocomplete="off" required>
+            <input type="submit" value=">>" id="text" style="width: 50px;margin-left:3px;font-weight: bold;font-size: 12px;background-color: rgb(16, 143, 5);color:white;border: black 2px solid;">
+        </form>
+    </div>
+</div>
+<a href="/" style="text-decoration: none;color:white;float: left;"><button style="padding:5px;background-color: teal;color:white;font-size: 20px;"><-HOME</b-utton></a>
+</body>
+</html>
+{% endblock %}

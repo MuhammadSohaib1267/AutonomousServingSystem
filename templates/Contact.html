@@ -1,0 +1,78 @@
+{% extends "Layout.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style>
+        .b{
+            width:100%;
+            height:100%;
+            background-image: linear-gradient(black,aqua);
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-weight:bold;
+            animation: myanimation 15s infinite;
+        }
+        @keyframes myanimation {
+            0% {background-image: linear-gradient(rgb(43, 43, 43),rgb(0, 0, 0));}
+            50%{background-image: linear-gradient(black,rgb(36, 8, 1));}
+            100%{background-image: linear-gradient(black,rgb(104, 104, 104));}
+        }
+        .h{
+            color:rgb(170, 178, 179);
+            font-size: 50px;
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-color: rgb(170, 178, 179);
+            text-decoration-style: double;
+            margin-top:79px;
+        }
+        table, th, td {
+            border: 5px solid black;
+            font-weight: bold;
+        }
+        th{
+            background-color: black;
+        }
+        @media only screen and (max-width:900px){
+            table{
+                display: none;
+            }}
+    </style>
+</head>
+<body class="b">
+    <center><h1 class="h">CONTACT</h1><br><br><br><br><br>
+        <table style="color:white;font-size:15px;">
+            <tr>
+              <th><h2 style="font-weight: bold;">&nbsp;&nbsp;ADMINISTRATION&nbsp;&nbsp;&nbsp;</h2></th>
+              <th><h2 style="font-weight: bold;">&nbsp;&nbsp;CONTACTS&nbsp;&nbsp;&nbsp;</h2></th>
+              <th><h2 style="font-weight: bold;">&nbsp;&nbsp;EMAILS&nbsp;&nbsp;&nbsp;</h2></th>
+            </tr>
+            <tr>
+              <td>&nbsp;&nbsp;<q>Muhammad Sohaib</q></td>
+              <td>&nbsp;&nbsp;+92-333-2140546</td>
+              <td>&nbsp;&nbsp;sohaibstylo03332140546@gmail.com&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;&nbsp;<q>Muhammad Anas Khan</q></td>
+              <td>&nbsp;&nbsp;+92-336-2261560</td>
+              <td>&nbsp;&nbsp;anaskhan569@gmail.com&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;&nbsp;<q>Wajeeh Uddin</q></td>
+              <td>&nbsp;&nbsp;+92-336-3765067</td>
+              <td>&nbsp;&nbsp;wajeehzafar101@gmail.com&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+          </table><br><br><br><br><br><br>
+    <a href="" ><i class="fab fa-facebook fa-3x" style="margin-top: 25px;"></i></a>
+    <a href="" ><i class="fab fa-instagram fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+    <a href="" ><i class="fab fa-twitter fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sohaibstylo03332140546@gmail.com&su=ASSCustomerContact&body=BODY&bcc=anaskhan569@gmail.com" ><i class="fas fa-at fa-3x" style="margin-top: 25px;margin-left: 20px;"></i></a>
+    <h6><u>Follow Us</u></h6>
+    </center><br>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderArrived</title>
+    <style>
+        .bk{
+            background-color: rgb(201, 201, 201);
+        }
+        .t{
+            font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+            font-size:100px;
+            margin-top: 130px;
+            font-weight: bold;
+        }
+        .b{
+            font-family: New Century Schoolbook, TeX Gyre Schola, serif;
+            background-color: greenyellow;
+            font-size: 20px;
+            margin-top:50px;
+            width:100px;
+            border:5px silver;
+            border-style:groove;
+        }
+    </style>
+</head>
+<body class="bk">
+    <center><p class="t">ORDER ARRIVED</p>
+    <p>The Autonomous Serving Robot is on the door please the door and recieve you order</p>
+    <a href="/orderRecieved" style="text-decoration: none;"><button class="b">OK!</button></a>
+    </center>
+</body>
+</html>
+{% endblock %}

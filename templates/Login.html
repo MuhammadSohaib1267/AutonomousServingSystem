@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center</title>
+    <style>
+        .bk{
+            background-image: linear-gradient(to right,silver,rgba(0, 0, 0, 0.596));
+        }
+        .vf{
+            background-color: rgb(235, 233, 233);
+            font-size: 15px;
+            height:180px;
+            width:400px;
+            margin:auto;
+            margin-top: 200px;
+            padding: 20px;
+            text-align: center;
+            align-content: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            border: 5px;
+            border-color: grey;
+            border-style:ridge;
+        }
+    </style>
+</head>
+<body class="bk">
+    <div class="vf">
+        <img src="/static/FypNewLogo.svg" height="40px" width="80px">
+        <form action="/Help" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <h2>HELP CENTER</h2>
+        <input type="email" name="email" placeholder="ENTER Email Address" style="font-size:20px;font-weight: bold;width:400px;border-style:ridge;border-color: rgb(109, 108, 108);background-color: rgba(128, 128, 128, 0.116);" required><br><br>
+        <input type="submit" value="SUBMIT" style="background-color: rgba(153, 255, 0, 0.63);cursor: pointer;font-size: 18px;font-weight: bold;text-align: center;border-color: rgb(75, 75, 75);">
+        </form>
+    </div>
+</body>
+</html>

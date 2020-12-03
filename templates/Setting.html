@@ -1,0 +1,90 @@
+{% extends 'SecondLayout.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting</title>
+    <style>
+        .bk{
+            background-image: linear-gradient(rgb(230, 230, 230), white);
+            background-size:cover;
+            background-repeat: no-repeat;
+            background-position:top center;
+            background-attachment:fixed;
+        }
+        .grid{
+            display: grid;
+            height:auto;
+            grid-template-columns: 300px 300px 300px 300px;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button{
+            width:220px;
+            height: 400px;
+            background-color: rgb(27, 17, 8);
+            text-align: center;
+            color:white;
+            margin-top:100px;
+            text-shadow:1px 1px grey;
+            box-shadow: 5px 10px #888888;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            cursor:pointer;
+        }
+        .button:hover{
+            margin-top:70px;
+            color:rgba(27, 17, 8, 0.603);
+        }
+        @media only screen and (max-width:1300px){
+            .grid{
+                grid-template-columns:300px 300px 300px;
+            }
+        }
+        @media only screen and (max-width:1150px){
+            .grid{
+                grid-template-columns:300px 300px;
+            }
+        }
+        @media only screen and (max-width:800px){
+            .grid{
+                grid-template-columns:300px;
+            }
+        }
+    </style>
+</head>
+<body class="bk">
+    <div>
+    <a href="/MDPortal"><img src="/static/FypNewLogo.svg" height="50px" width="100px" style="float: left;margin-top:none;padding:none;"></a>
+    </div><br>
+    <div class="grid">
+    <a href="/UpdateAdministrationKey" style="text-decoration: none;">
+    <div class="button"><br>
+        <h2><u>UPDATE ADMIN KEY</u></h2>
+        <img src="/static/AKey.png" height="200px" width="200px" style="margin-top:10px;">
+    </div>
+    </a>
+    <a href="/UpdateBackgroundLayout" style="text-decoration: none;">
+    <div class="button"><br>
+        <h2><u>UPDATE BACKGROUD LAYOUT</u></h2>
+        <i class="fas fa-images fa-10x" style="margin-top: 30px;color:rgb(110, 110, 110);"></i>
+    </div>
+    </a>
+    <a href="/UpdateChefKey" style="text-decoration: none;">
+    <div class="button"><br>
+        <h2><u>UPDATE<br> CHEF<br> KEY</u></h2>
+        <img src="/static/AKey.png" height="200px" width="200px" style="margin-top:10px;">
+    </div>
+    </a>
+    <a href="/UpdateServices" style="text-decoration: none;">
+        <div class="button"><br>
+            <h2><u>UPDATE<br> SERVICES</u></h2>
+            <img src="/static/updateServices.jpg" height="200px" width="200px" style="margin-top:10px;">
+        </div>
+        </a>
+    </div>
+</body>
+</html>
+{% endblock %}
