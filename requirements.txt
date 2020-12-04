@@ -78,7 +78,6 @@ llvmlite==0.21.0
 locket==0.2.0
 lxml==4.1.1
 matplotlib==2.1.2
-menuinst==1.4.11
 mistune==0.8.3
 mkl-fft==1.2.0
 mkl-random==1.1.1
