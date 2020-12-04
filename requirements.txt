@@ -133,7 +133,6 @@ PySocks==1.6.7
 pytest==3.3.2
 python-dateutil==2.8.1
 pytz==2017.3
-pywin32==222
 pywinpty==0.5
 PyYAML==3.12
 pyzmq==16.0.3
