@@ -1539,6 +1539,6 @@ def lift():
     return render_template("Lift.html",data=data)
 
 if __name__=='__main__':
-    secret_key = secrets.token_hex(16)
+    secret_key = os.urandom(12)
     app.config['SECRET_KEY'] = secret_key
     app.run(debug=True,port=1122)
