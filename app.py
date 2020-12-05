@@ -1540,5 +1540,5 @@ def lift():
 
 if __name__=='__main__':
     secret_key = os.urandom(12)
-    app.config['SECRET_KEY'] = str(secret_key)
+    app.secret_key = str(secret_key)
     app.run(debug=True,port=1122)
