@@ -1480,4 +1480,5 @@ def lift():
 
 if __name__=='__main__':
     app.secret_key = os.urandom(24)
+    app.debug = True
     app.run()
