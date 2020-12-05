@@ -1,7 +1,6 @@
 from flask import Flask , render_template ,request ,flash , redirect , url_for , session
 from passlib.hash import sha256_crypt
 from wtforms import Form , StringField , TextAreaField, PasswordField , validators
-import cv2
 from functools import wraps
 from PIL import Image
 from flask_pymongo import PyMongo
@@ -15,11 +14,9 @@ import time
 import subprocess
 from pygame import mixer
 import numpy as np
-from tensorflow.keras.models import load_model
 from PIL import Image
 from keras.preprocessing import image
 from datetime import date
-facelock="load_model('ASSFaceLock.hdf5')"
 
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
@@ -790,7 +787,8 @@ def alt():
                     session["username"]=result["username"]
                     session["admin_logged_in"]=True 
                     if result["post"]=="Manager" or result["post"]=="manager" or result=="MANAGER":
-                        return redirect("/FaceIdentification")
+                        flash("Access is only available from authorized system","warning")
+                        return redirect("/AdminLogin")
                     else:
                         return redirect("/AdminPortal")
             else:
