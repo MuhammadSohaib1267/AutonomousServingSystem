@@ -14,8 +14,6 @@ import time
 import subprocess
 from pygame import mixer
 import numpy as np
-from PIL import Image
-from keras.preprocessing import image
 from datetime import date
 
 ImageName="/static/CoverImageDefault.jpg"
