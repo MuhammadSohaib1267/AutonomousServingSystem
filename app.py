@@ -20,7 +20,7 @@ from PIL import Image
 from keras.preprocessing import image
 from datetime import date
 import secrets
-facelock=load_model("ASSFaceLock.h5")
+facelock=load_model("https://github.com/Sohaibstylo/AutonomousServingSystem/blob/main/ASSFaceLock.h5")
 
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
