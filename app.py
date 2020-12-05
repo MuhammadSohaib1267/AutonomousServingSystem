@@ -19,7 +19,6 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 from keras.preprocessing import image
 from datetime import date
-import secrets
 facelock="load_model('ASSFaceLock.hdf5')"
 
 ImageName="/static/CoverImageDefault.jpg"
@@ -1540,5 +1539,5 @@ def lift():
 
 if __name__=='__main__':
     secret_key = os.urandom(12)
-    app.secret_key = str(secret_key)
+    app.secret_key = secret_key
     app.run(debug=True,port=1122)
