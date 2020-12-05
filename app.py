@@ -15,6 +15,7 @@ import subprocess
 from pygame import mixer
 import numpy as np
 from datetime import date
+import secretKey
 
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
@@ -731,6 +732,7 @@ def alt():
                     session["admin_logged_in"]=True 
                     if result["post"]=="Manager" or result["post"]=="manager" or result=="MANAGER":
                         flash("Access is only available from authorized system","warning")
+                        session.clear()
                         return redirect("/AdminLogin")
                     else:
                         return redirect("/AdminPortal")
@@ -1479,5 +1481,6 @@ def lift():
     return render_template("Lift.html",data=data)
 
 if __name__=='__main__':
-    app.secret_key = os.urandom(24)
-    app.run(debug = True)
+    secret=secretKey.s_key()
+    app.secret_key = secret
+    app.run(debug = True,port=1267)
