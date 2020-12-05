@@ -711,62 +711,7 @@ def deliveredOrders():
     else:
         flash("No Data Found","warning")
         return redirect("/ChefPortal")
-
-@app.route("/FaceIdentification")
-@admin_logged_in
-def fi():
-    return render_template("Loading.html")
-
-@app.route("/FaceDetection")
-@admin_logged_in
-def fd():
-    face_cascade = cv2.CascadeClassifier('templates/haarcascade_frontalface_default.xml')
-    detect=False
-    cap = cv2.VideoCapture(0)
-    while 1:
-        ret, images = cap.read()
-        gray = cv2.cvtColor(images, cv2.COLOR_BGR2RGB)
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        text = 'Width: '+ str(cap.get(3)) + ' Height:' + str(cap.get(4))
-        frame = cv2.putText(images, "Press Enter On Blue Mark", (10, 20), font,0.6,(0, 255, 255), 2, cv2.LINE_AA)
-        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-        for (x,y,w,h) in faces:
-            detect=True
-            cv2.rectangle(images,(x,y),(x+w,y+h),(255,0,0),2)
-            roi_gray = gray[y:y+h, x:x+w]
-            roi_color = images[y:y+h, x:x+w]
-        if(detect==True):
-            cv2.imwrite("tempface.jpg",gray)
-        k = cv2.waitKey(30) & 0xff
-        if k == 13:
-            break
-        cv2.imshow('Recognizing Face',images)
-    cap.release()
-    cv2.destroyAllWindows()
-    return redirect("/FaceRecognition")
-
-@app.route("/FaceRecognition")
-@admin_logged_in
-def fr():
-    identities={0:"anas",1:"sohaib",2:"wajeeh"}
-    TempImg = image.load_img('tempface.jpg', target_size=(200,200,3))
-    TempImg  = image.img_to_array(TempImg)
-    TempImg  = TempImg.reshape((1,) + TempImg.shape)
-    Img  = TempImg/255
-    img_class=facelock.predict_classes(Img)
-    temp=session["username"].lower()
-    temp2=identities[img_class[0]]
-    print(img_class)
-    print(temp2)
-    if temp==temp2:
-        time.sleep(3.0)
-        flash("You are now loggedin","success")
-        return redirect("/AdminPortal")
-    else:
-        time.sleep(3.0)
-        flash("Face Not Identified","success")
-        return redirect("/AdminLogin")
-
+    
 @app.route("/AdminLoginTest",methods=["GET","POST"])
 def alt():
     data=request.form
