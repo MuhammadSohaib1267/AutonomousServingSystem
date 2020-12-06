@@ -1482,5 +1482,5 @@ def lift():
 
 if __name__=='__main__':
     secret=secretKey.s_key()
-    app.secret_key = secret
+    app.config["SECRET_KEY"] = secret
     app.run(debug = True,port=1267)
