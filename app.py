@@ -19,6 +19,8 @@ import secretKey
 
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
+secret=secretKey.s_key()
+app.config["SECRET_KEY"] = secret
 
 administration_key=""
 CHEFKEY=""
@@ -1481,6 +1483,4 @@ def lift():
     return render_template("Lift.html",data=data)
 
 if __name__=='__main__':
-    secret=secretKey.s_key()
-    app.config["SECRET_KEY"] = secret
     app.run(debug = True,port=1267)
