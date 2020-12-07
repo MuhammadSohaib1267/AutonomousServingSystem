@@ -1,4 +1,4 @@
-from flask import Flask , render_template ,request ,flash , redirect , url_for , session
+from flask import Flask , render_template ,request ,flash , redirect , url_for
 from passlib.hash import sha256_crypt
 from wtforms import Form , StringField , TextAreaField, PasswordField , validators
 from functools import wraps
@@ -17,6 +17,8 @@ import numpy as np
 from datetime import date
 import secretKey
 
+session={}
+
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
 secret=secretKey.s_key()
@@ -27,6 +29,7 @@ CHEFKEY=""
 
 app.config['MONGO_URI']="mongodb+srv://Sohaib:sohaib12439@cluster0-5ij3o.gcp.mongodb.net/AutonomousServingSystem?retryWrites=true&w=majority"
 mongo=PyMongo(app)
+
 @app.route("/",methods=["GET","POST"])
 def home():
     session.clear()
@@ -379,10 +382,15 @@ def oc():
             TotalPrice=0
             NumberOfItems=0
             flash("Order Placed","success")
+            if session["package"]=="Normal":
+                return redirect("/CustomerNormalPortal")
+            elif session["package"]=="Luxury":
+                return redirect("/CustomerLuxuryPortal")
+            elif session["package"]=="SeaView":
+                return redirect("/CustomerSeaViewPortal")
     else:
         flash("No Item Found","danger")
         return redirect("/Cart")
-    return redirect("/CustomerNormalPortal")
 
 @app.route("/ordersDetails")
 @customer_logged_in
@@ -410,7 +418,12 @@ def od():
             return render_template("OrderedDetails.html",orders=orders)
     else:
         flash("No Data Found","warning")
-        return redirect("/CustomerNormalPortal")
+        if session["package"]=="Normal":
+            return redirect("/CustomerNormalPortal")
+        elif session["package"]=="Luxury":
+            return redirect("/CustomerLuxuryPortal")
+        elif session["package"]=="SeaView":
+            return redirect("/CustomerSeaViewPortal")
     
 @app.route("/billing")
 @customer_logged_in
