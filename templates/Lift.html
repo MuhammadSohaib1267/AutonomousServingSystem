@@ -6,11 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .bg{
+            background-color: burlywood;
+        }
+    </style>
 </head>
-<body style="background-color: burlywood;">
-    <center><h1>LIFT PORTAL</h1><br><br>
-    <h3>Status : {{data.status}}</h3>
-    <h3>Room : {{data.room}}</h3>
+<body class="bg">
+    <center><h1 style="font-weight: bold;text-decoration: underline;">LIFT PORTAL</h1><br><br>
+    <h3 style="font-weight: bold;">Status : {{data.status}}</h3>
+    <h3 style="font-weight: bold;">Room : {{data.room}}</h3>
     </center>
 </body>
 </html>
