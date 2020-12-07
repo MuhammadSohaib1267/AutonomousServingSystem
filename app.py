@@ -16,6 +16,8 @@ from pygame import mixer
 import numpy as np
 from datetime import date
 import secretKey
+import order
+import sessions
 
 ImageName="/static/CoverImageDefault.jpg"
 app = Flask(__name__)
@@ -25,9 +27,6 @@ app.config["SECRET_KEY"] = secret
 def has_run():
     has_run.has_run={"running":False}
 
-def session():
-    session.session={}
-
 administration_key=""
 CHEFKEY=""
 
@@ -36,8 +35,8 @@ mongo=PyMongo(app)
 
 @app.route("/",methods=["GET","POST"])
 def home():
-    session.session.clear()
-    session.session["admin_logged_in"]=False
+    sessions.session.clear()
+    sessions.session["admin_logged_in"]=False
     cur=mongo.db.AutonomousServingSystem
     result=cur.find_one({"title":"KEYS"})
     if result:
@@ -55,7 +54,7 @@ def AL():
 def admin_logged_in(g):
     @wraps(g)
     def wrap(*args , **kwargs):
-        if 'admin_logged_in' in session.session:
+        if 'admin_logged_in' in sessions.session:
             return g(*args , **kwargs)
         else:
             flash("Unauthorized Please login " , "danger")
@@ -65,7 +64,7 @@ def admin_logged_in(g):
 @app.route("/AdminSignup")
 @admin_logged_in
 def AS():
-    return render_template("AdminSignUp.html",session=session.session)
+    return render_template("AdminSignUp.html",session=sessions.session)
 
 @app.route("/CustomerLogin")
 def CL():
@@ -73,7 +72,7 @@ def CL():
 
 @app.route("/CustomerSignup")
 def CS():
-    return render_template("CustomerSignUp.html",session=session.session)
+    return render_template("CustomerSignUp.html",session=sessions.session)
 
 @app.route("/CustomerSignUpProcess",methods=["GET","POST","UPDATE"])
 def CSUP():   
@@ -103,7 +102,7 @@ def CSUP():
                         cur.insert_one({"title":"Customer","username":username,"customer_name":data["username"],"age":data["age"],"gender":data["gender"],"room_number":data["room_number"],"package":data["package"],"country":data["country"],"date_of_birth":data["dob"],"phone_number":data["phone"],"cnic":data["cnic"],"password":cp,"r-key":administration_key,"date_of_register":datetime.now(),"bill":bill,"checkout":False})
                         flash("You are now registered and can login username="+username,"success")
                         cur.find_one_and_update({"title":"Rooms"},{"$set":{t:"reserved"}})
-                        if session.session["admin_logged_in"]==True:
+                        if sessions.session["admin_logged_in"]==True:
                             return redirect("/AdminPortal")
                         else:
                             return redirect("/CustomerLogin")
@@ -145,30 +144,30 @@ def clt():
             if(str(result["room_number"])==str(data["room_no"]) and result["title"]=="Customer"):
                 if sha256_crypt.verify(data["password"] , result["password"]):
                     if result["package"]=="Normal":
-                        session.session["username"]=result["username"]
-                        session.session["title"]=result["title"]
-                        session.session["package"]="Normal"
-                        session.session["customer_logged_in"]=True
-                        session.session["normal"]=True
-                        session.session["room_no"]=data["room_no"]
+                        sessions.session["username"]=result["username"]
+                        sessions.session["title"]=result["title"]
+                        sessions.session["package"]="Normal"
+                        sessions.session["customer_logged_in"]=True
+                        sessions.session["normal"]=True
+                        sessions.session["room_no"]=data["room_no"]
                         flash("You are now logged in","success")
                         return redirect("/CustomerNormalPortal")
                     if result["package"]=="Luxury":
-                        session.session["username"]=result["username"]
-                        session.session["title"]=result["title"]
-                        session.session["package"]="Luxury"
-                        session.session["customer_logged_in"]=True 
-                        session.session["luxury"]=True  
-                        session.session["room_no"]=data["room_no"]                     
+                        sessions.session["username"]=result["username"]
+                        sessions.session["title"]=result["title"]
+                        sessions.session["package"]="Luxury"
+                        sessions.session["customer_logged_in"]=True 
+                        sessions.session["luxury"]=True  
+                        sessions.session["room_no"]=data["room_no"]                     
                         flash("You are now logged in","success")
                         return redirect("/CustomerLuxuryPortal")
                     if result["package"]=="SeaView":
-                        session.session["username"]=result["username"]
-                        session.session["title"]=result["title"]
-                        session.session["package"]="SeaView"
-                        session.session["customer_logged_in"]=True
-                        session.session["seaview"]=True
-                        session.session["room_no"]=data["room_no"]
+                        sessions.session["username"]=result["username"]
+                        sessions.session["title"]=result["title"]
+                        sessions.session["package"]="SeaView"
+                        sessions.session["customer_logged_in"]=True
+                        sessions.session["seaview"]=True
+                        sessions.session["room_no"]=data["room_no"]
                         flash("You are now logged in","success")
                         return redirect("/CustomerSeaViewPortal")
                     else:
@@ -184,15 +183,10 @@ def clt():
             flash("Invalid username or password","danger")
             return redirect("/CustomerLogin")
 
-def order():
-    order.NumberOfItems=0
-    order.Items=[]
-    order.TotalPrice=0
-
 def customer_logged_in(g):
     @wraps(g)
     def wrap(*args , **kwargs):
-        if 'customer_logged_in' in session.session:
+        if 'customer_logged_in' in sessions.session:
             return g(*args , **kwargs)
         else:
             flash("Unauthorized Please login " , "danger")
@@ -202,11 +196,10 @@ def customer_logged_in(g):
 @app.route("/CustomerNormalPortal")
 @customer_logged_in
 def cnp():
-    order()
     cursor=mongo.db.AutonomousServingSystem
-    data=cursor.find_one({"username":session.session["username"],"title":session.session["title"]})
+    data=cursor.find_one({"username":sessions.session["username"],"title":sessions.session["title"]})
     cur=mongo.db.AutonomousServingRobot
-    result=cur.find_one({"username":session.session["username"],"room":session.session["room_no"],"status":"waiting"})
+    result=cur.find_one({"username":sessions.session["username"],"room":sessions.session["room_no"],"status":"waiting"})
     if result:
         return redirect("/OrderArived")
     return render_template("CustomerNormalPortal.html",data=data)
@@ -214,11 +207,10 @@ def cnp():
 @app.route("/CustomerSeaViewPortal")
 @customer_logged_in
 def csvp():
-    order()
     cursor=mongo.db.AutonomousServingSystem
-    data=cursor.find_one({"username":session.session["username"],"title":session.session["title"]})
+    data=cursor.find_one({"username":sessions.session["username"],"title":sessions.session["title"]})
     cur=mongo.db.AutonomousServingRobot
-    result=cur.find_one({"username":session.session["username"],"room":session.session["room_no"],"status":"waiting"})
+    result=cur.find_one({"username":sessions.session["username"],"room":sessions.session["room_no"],"status":"waiting"})
     if result:
         return redirect("/OrderArived")
     return render_template("CustomerSeaViewPortal.html",data=data)
@@ -226,11 +218,10 @@ def csvp():
 @app.route("/CustomerLuxuryPortal")
 @customer_logged_in
 def clp():
-    order()
     cursor=mongo.db.AutonomousServingSystem
-    data=cursor.find_one({"username":session.session["username"],"title":session.session["title"]})
+    data=cursor.find_one({"username":sessions.session["username"],"title":sessions.session["title"]})
     cur=mongo.db.AutonomousServingRobot
-    result=cur.find_one({"username":session.session["username"],"room":session.session["room_no"],"status":"waiting"})
+    result=cur.find_one({"username":sessions.session["username"],"room":sessions.session["room_no"],"status":"waiting"})
     if result:
         return redirect("/OrderArived")
     return render_template("CustomerLuxuryPortal.html",data=data)
@@ -238,7 +229,7 @@ def clp():
 @app.route("/CustomerSignout")
 @customer_logged_in
 def clo():
-    session.session.clear()
+    sessions.session.clear()
     flash("You are now logged out","success")
     return redirect("/CustomerLogin")
 
@@ -295,7 +286,7 @@ def ai():
 @app.route("/Cart")
 @customer_logged_in
 def cart():
-    return render_template("Cart.html",items=order.Items,total=order.TotalPrice,session=session.session)
+    return render_template("Cart.html",items=order.Items,total=order.TotalPrice,session=sessions.session)
 
 @app.route("/QuantityIncrement",methods=["GET","POST"])
 def qi():
@@ -370,23 +361,23 @@ def oc():
             del order.Items[temp]
         temp+=1
     if len(order.Items)>0:
-        result=cur.find_one({"username":session.session["username"]})
+        result=cur.find_one({"username":sessions.session["username"]})
         if result:
             now=datetime.now()
             time = now.strftime("%H:%M:%S")
             today = datetime.today().strftime('%Y-%m-%d')
-            cur.insert_one({"title":"order","customerName":session.session["username"],"order":order.Items,"amount":order.TotalPrice,"room_number":result["room_number"],"status":"placed","date":str(today),"time":str(time)})
+            cur.insert_one({"title":"order","customerName":sessions.session["username"],"order":order.Items,"amount":order.TotalPrice,"room_number":result["room_number"],"status":"placed","date":str(today),"time":str(time)})
             updatedBill=int(result["bill"])+int(order.TotalPrice)
             cur.update({"_id":result["_id"]},{"$set":{"bill":str(updatedBill)}})
             order.Items.clear()
             order.TotalPrice=0
             order.NumberOfItems=0
             flash("Order Placed","success")
-            if session.session["package"]=="Normal":
+            if sessions.session["package"]=="Normal":
                 return redirect("/CustomerNormalPortal")
-            elif session.session["package"]=="Luxury":
+            elif sessions.session["package"]=="Luxury":
                 return redirect("/CustomerLuxuryPortal")
-            elif session.session["package"]=="SeaView":
+            elif sessions.session["package"]=="SeaView":
                 return redirect("/CustomerSeaViewPortal")
     else:
         flash("No Item Found","danger")
@@ -396,7 +387,7 @@ def oc():
 @customer_logged_in
 def od():
     cur=mongo.db.AutonomousServingSystem
-    result=cur.find({"title":"order","customerName":session.session["username"]})
+    result=cur.find({"title":"order","customerName":sessions.session["username"]})
     if result:
         d=[]
         for i in result:
@@ -418,11 +409,11 @@ def od():
             return render_template("OrderedDetails.html",orders=orders)
     else:
         flash("No Data Found","warning")
-        if session.session["package"]=="Normal":
+        if sessions.session["package"]=="Normal":
             return redirect("/CustomerNormalPortal")
-        elif session.session["package"]=="Luxury":
+        elif sessions.session["package"]=="Luxury":
             return redirect("/CustomerLuxuryPortal")
-        elif session.session["package"]=="SeaView":
+        elif sessions.session["package"]=="SeaView":
             return redirect("/CustomerSeaViewPortal")
     
 @app.route("/billing")
@@ -432,10 +423,10 @@ def b():
     bill=[]
     result=cur.find_one({"packagePrices":"ASS"})
     if result:
-        pA=result[session.session["package"]]
+        pA=result[sessions.session["package"]]
         Total=int(pA)
         cur=mongo.db.AutonomousServingSystem
-        order=cur.find({"title":"order","customerName":session.session["username"]})
+        order=cur.find({"title":"order","customerName":sessions.session["username"]})
         if order:
             for i in order:
                 temp={}
@@ -497,7 +488,7 @@ def arf(data):
                 mongo.save_file(fn,adminImage)
                 cur.insert_one({"title":"Admin","id":id,"username":data["username"],"age":data["age"],"gender":data["gender"],"post":data["adminPost"],"qualification":data["qualification"],"country":data["country"],"date_of_birth":data["dob"],"phone_number":data["phone"],"cnic":data["cnic"],"password":cp,"r-key":administration_key,"date_of_register":datetime.now(),"JobStatus":"Available","adminImage":fn})
                 flash("New Admin is now registered and can loginid="+id,"success")
-                if session.session["md_logged_in"]:
+                if sessions.session["md_logged_in"]:
                     return redirect("/MDPortal")
                 else:
                     return redirect("/AdminPortal")
@@ -521,7 +512,7 @@ def ar():
     elif data["post"]=="":
         flash("Post not found","danger")
         return redirect("/AdminSignUp")
-    if session.session["md_logged_in"]:
+    if sessions.session["md_logged_in"]:
         return redirect("/MDPortal")
     else:
         return redirect("/AdminPortal")
@@ -535,9 +526,9 @@ def chefLoginTest():
     if result:
         if sha256_crypt.verify(data["password"] , result["password"]):
             if CHEFKEY==data["key"]:
-                session.session["id"]=result["id"]
-                session.session["title"]=result["title"]
-                session.session["chef_logged_in"]=True 
+                sessions.session["id"]=result["id"]
+                sessions.session["title"]=result["title"]
+                sessions.session["chef_logged_in"]=True 
                 flash("You are now loggedin","success")
                 return redirect("/ChefPortal")
             else:
@@ -553,7 +544,7 @@ def chefLoginTest():
 def chef_logged_in(g):
     @wraps(g)
     def wrap(*args , **kwargs):
-        if 'chef_logged_in' in session.session:
+        if 'chef_logged_in' in sessions.session:
             return g(*args , **kwargs)
         else:
             flash("Unauthorized Please login " , "danger")
@@ -568,7 +559,7 @@ def file(filename):
 @chef_logged_in
 def cp():
     cur=mongo.db.AutonomousServingSystem
-    result=cur.find_one({"title":"Chef","id":session.session["id"]})
+    result=cur.find_one({"title":"Chef","id":sessions.session["id"]})
     if result:
         data=result
         order=cur.find({"title":"order"})
@@ -595,7 +586,7 @@ def cp():
 @app.route("/ChefSignout")
 @chef_logged_in
 def cS():
-    session.session.clear()
+    sessions.session.clear()
     flash("Successfully Logged Out","success")
     return redirect("/AdminLogin")
 
@@ -622,7 +613,7 @@ def ro():
         time = now.strftime("%H:%M:%S")
         today = datetime.today().strftime('%Y-%m-%d')
         cur.find_one_and_update({"_id":result["_id"]},{"$set":{"status":"recieved"}})
-        cur.insert_one({"title":"recievedOrder","chefId":session.session["id"],"customerName":data["customerName"],"order":data["items"],"room_number":data["rn"],"status":"preparing","date":str(today),"time":str(time)})
+        cur.insert_one({"title":"recievedOrder","chefId":sessions.session["id"],"customerName":data["customerName"],"order":data["items"],"room_number":data["rn"],"status":"preparing","date":str(today),"time":str(time)})
         flash("Order Recieved","success")
         return redirect("/ChefPortal")
     else:
@@ -668,7 +659,7 @@ def pd():
         fn=data["title"]+temp+deal_image.filename
         mongo.save_file(fn,deal_image)
         cursor=mongo.db.AutonomousServingSystem
-        cursor.insert_one({"title":"deal","deal_name":data["title"],"description":data["description"],"price":int(data["price"]),"deal_image":fn,"chef_name":session.session["id"],"dateTime":datetime.now()})
+        cursor.insert_one({"title":"deal","deal_name":data["title"],"description":data["description"],"price":int(data["price"]),"deal_image":fn,"chef_name":sessions.session["id"],"dateTime":datetime.now()})
         flash("Deal Uploaded","success")
         return redirect("/ChefPortal")
     else:
@@ -679,7 +670,7 @@ def pd():
 @chef_logged_in
 def dd():
     cur=mongo.db.AutonomousServingSystem
-    result=cur.find({"title":"deal","chef_name":session.session["id"]})
+    result=cur.find({"title":"deal","chef_name":sessions.session["id"]})
     if result:
         deals=[]
         temp={}
@@ -706,7 +697,7 @@ def dd():
 def ddp():
     data=request.form
     cur=mongo.db.AutonomousServingSystem
-    result=cur.remove({"title":"deal","deal_name":data["deal_name"],"description":data["description"],"price":int(data["price"]),"chef_name":session.session["id"]})
+    result=cur.remove({"title":"deal","deal_name":data["deal_name"],"description":data["description"],"price":int(data["price"]),"chef_name":sessions.session["id"]})
     if result:
         flash("Deal Deleted","success")
         return redirect("/DeleteDeal")
@@ -717,7 +708,7 @@ def ddp():
 @app.route("/DeliveredOrders",methods=["GET","POST"])
 def deliveredOrders():
     cursor=mongo.db.AutonomousServingSystem
-    result=cursor.find_one({"title":"AST_Order","chef_id":session.session["id"],"status":"delivered"})
+    result=cursor.find_one({"title":"AST_Order","chef_id":sessions.session["id"],"status":"delivered"})
     if result:
         data=[result]
         return render_template("DeliveredOrders.html",data=data)
@@ -735,18 +726,18 @@ def alt():
         if sha256_crypt.verify(data["password"] , result["password"]):
             if administration_key==data["key"]:
                 if data["adminPost"]=="MD":
-                    session.session["md_verification"]=True
-                    session.session["id"]=result["id"]
+                    sessions.session["md_verification"]=True
+                    sessions.session["id"]=result["id"]
                     return redirect("/MD")
                 else:
-                    session.session["id"]=result["id"]
-                    session.session["title"]=result["title"]
-                    session.session["post"]=result["post"]
-                    session.session["username"]=result["username"]
-                    session.session["admin_logged_in"]=True 
+                    sessions.session["id"]=result["id"]
+                    sessions.session["title"]=result["title"]
+                    sessions.session["post"]=result["post"]
+                    sessions.session["username"]=result["username"]
+                    sessions.session["admin_logged_in"]=True 
                     if result["post"]=="Manager" or result["post"]=="manager" or result=="MANAGER":
                         flash("Access is only available from authorized system","warning")
-                        session.session.clear()
+                        sessions.session.clear()
                         return redirect("/AdminLogin")
                     else:
                         return redirect("/AdminPortal")
@@ -765,19 +756,19 @@ def alt():
 @admin_logged_in
 def ap():
     cur=mongo.db.AutonomousServingSystem
-    data=cur.find_one({"title":"Admin","id":session.session["id"]})
+    data=cur.find_one({"title":"Admin","id":sessions.session["id"]})
     return render_template("AdminPortal.html",data=data)
 
 @app.route("/AdminSignout")
 def aso():
-    session.session.clear()
+    sessions.session.clear()
     flash("Loggeod Out","success")
     return redirect("/AdminLogin")
 
 def md_verification(g):
     @wraps(g)
     def wrap(*args , **kwargs):
-        if 'md_verification' in session.session:
+        if 'md_verification' in sessions.session:
             return g(*args , **kwargs)
         else:
             flash("Unauthorized Please login" , "danger")
@@ -793,21 +784,21 @@ def md():
 def mdt():
     entered_data=request.form
     cur=mongo.db.AutonomousServingSystem
-    database=cur.find_one({"title":"Admin","id":session.session["id"]})
+    database=cur.find_one({"title":"Admin","id":sessions.session["id"]})
     if entered_data["cnic"]==database["cnic"]:
-        session.session["md_logged_in"]=True
-        session.session["admin_logged_in"]=True
+        sessions.session["md_logged_in"]=True
+        sessions.session["admin_logged_in"]=True
         flash("Welcome "+database["username"],"success")
         return redirect("/MDPortal")
     else:
-        session.session.clear()
+        sessions.session.clear()
         flash("Unauthorized Login","danger")
         return redirect("/AdminLogin")
 
 def md_logged_in(g):
     @wraps(g)
     def wrap(*args , **kwargs):
-        if 'md_logged_in' in session.session:
+        if 'md_logged_in' in sessions.session:
             return g(*args , **kwargs)
         else:
             flash("Unauthorized Please login " , "danger")
@@ -818,7 +809,7 @@ def md_logged_in(g):
 @md_logged_in
 def mdp():
     cur=mongo.db.AutonomousServingSystem
-    data=cur.find_one({"title":"Admin","id":session.session["id"]})
+    data=cur.find_one({"title":"Admin","id":sessions.session["id"]})
     return render_template("MDPortal.html",data=data)
 
 
@@ -831,7 +822,7 @@ def CustomerInquiry():
         return render_template("CustomerInquiry.html",data=data)
     else:
         flash("No Data Found","warninig")
-        return render_template("CustomerInquiry.html",session=session.session)
+        return render_template("CustomerInquiry.html",session=sessions.session)
 
 def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
@@ -969,7 +960,7 @@ def ta():
 def RoomStatus():
     cur=mongo.db.AutonomousServingSystem
     data=cur.find_one({"title":"Rooms"})
-    return render_template("RoomsStatus.html",data=data,session=session.session)
+    return render_template("RoomsStatus.html",data=data,session=sessions.session)
 
 @app.route("/RoomsAddresses")
 @md_logged_in
@@ -1264,14 +1255,14 @@ def ulsp():
 
 @app.route("/Services")
 def s():
-    session.session["services"]=True
+    sessions.session["services"]=True
     cur=mongo.db.AutonomousServingSystem
     result=cur.find_one({"title":"services"})
-    return render_template("Services.html",session=session.session,data=result)
+    return render_template("Services.html",session=sessions.session,data=result)
 
 @app.route("/Contact")
 def C():
-    session.session["contact"]=True
+    sessions.session["contact"]=True
     return render_template("Contact.html")
 
 @app.route("/Feedback",methods=["GET","POST"])
@@ -1296,7 +1287,7 @@ def astc():
     if data["ck"]==CHEFKEY:
         today = date.today()
         d = today.strftime("%B %d, %Y")
-        cur.insert_one({"title":"AST_Order","room":data["rn"],"customer_name":data["cn"],"chef_id":session.session["id"],"status":"not_delivered","date":d})
+        cur.insert_one({"title":"AST_Order","room":data["rn"],"customer_name":data["cn"],"chef_id":sessions.session["id"],"status":"not_delivered","date":d})
         flash("Command Assigned","success")
         return redirect("/ChefPortal")
     else:
@@ -1309,12 +1300,12 @@ def l():
 
 @app.route("/Help",methods=["GET","POST"])
 def help():
-    if "email" in session.session:
+    if "email" in sessions.session:
         cur=mongo.db.CustomerCommunication
-        result=cur.find_one({"email":session.session["email"]})
+        result=cur.find_one({"email":sessions.session["email"]})
         print(result)
         if result==None:
-            cur.insert_one({"email":session.session["email"],"message":0,"reply":0})
+            cur.insert_one({"email":sessions.session["email"],"message":0,"reply":0})
             return render_template("Help.html")
         else:
             history=[]
@@ -1328,8 +1319,8 @@ def help():
         data=request.form
         if data:
             cur=mongo.db.CustomerCommunication
-            session.session["email"]=data["email"]
-            result=cur.find_one({"email":session.session["email"]})
+            sessions.session["email"]=data["email"]
+            result=cur.find_one({"email":sessions.session["email"]})
             if result==None:
                 cur.insert_one({"email":data["email"],"message":0,"reply":0})
                 return render_template("Help.html")
@@ -1362,15 +1353,15 @@ def sm():
     data=request.form
     msg=data["message"]
     cur=mongo.db.CustomerCommunication
-    result=cur.find_one({"email":session.session["email"]})
+    result=cur.find_one({"email":sessions.session["email"]})
     if result:
         nom=int(result["message"])
         message_key="msg"+str(nom)
-        cur.find_one_and_update({"email":session.session["email"]},{"$set":{"message":nom+1,message_key:msg}})
+        cur.find_one_and_update({"email":sessions.session["email"]},{"$set":{"message":nom+1,message_key:msg}})
         reply=chatbot(msg)
         nor=int(result["reply"])
         reply_key="reply"+str(nor)
-        cur.find_one_and_update({"email":session.session["email"]},{"$set":{"reply":nor+1,reply_key:reply}})
+        cur.find_one_and_update({"email":sessions.session["email"]},{"$set":{"reply":nor+1,reply_key:reply}})
         return redirect("/Help")
     else:
         return redirect("/Login")
@@ -1407,7 +1398,7 @@ def cmdpp():
     if data["pass"]==data["confirm_pass"]:
         password=sha256_crypt.encrypt(str(data["pass"]))
         cur=mongo.db.AutonomousServingSystem
-        cur.find_one_and_update({"id":session.session["id"],"post":"MD"},{"$set":{"password":password}})
+        cur.find_one_and_update({"id":sessions.session["id"],"post":"MD"},{"$set":{"password":password}})
         flash("Password Updated","success")
         return redirect("/MDPortal")
     else:
@@ -1426,7 +1417,7 @@ def cadpp():
     if data["pass"]==data["confirm_pass"]:
         password=sha256_crypt.encrypt(str(data["pass"]))
         cur=mongo.db.AutonomousServingSystem
-        cur.find_one_and_update({"id":session.session["id"],"title":"Admin"},{"$set":{"password":password}})
+        cur.find_one_and_update({"id":sessions.session["id"],"title":"Admin"},{"$set":{"password":password}})
         flash("Password Updated","success")
         return redirect("/AdminPortal")
     else:
@@ -1445,7 +1436,7 @@ def ccdpp():
     if data["pass"]==data["confirm_pass"]:
         password=sha256_crypt.encrypt(str(data["pass"]))
         cur=mongo.db.AutonomousServingSystem
-        cur.find_one_and_update({"id":session.session["id"],"title":"Chef"},{"$set":{"password":password}})
+        cur.find_one_and_update({"id":sessions.session["id"],"title":"Chef"},{"$set":{"password":password}})
         flash("Password Updated","success")
         return redirect("/ChefPortal")
     else:
@@ -1468,18 +1459,18 @@ def oa():
         mixer.music.play()
         if i<2:
             time.sleep(5)
-    return render_template("OrderArrived.html",session=session.session)
+    return render_template("OrderArrived.html",session=sessions.session)
 
 @app.route("/orderRecieved")
 @customer_logged_in
 def orderRecieved():
     cursor=mongo.db.AutonomousServingRobot
-    cursor.find_one_and_update({"customer_name":session.session["username"],"room":session.session["room_no"]},{"$set":{"status":"Recieved"}})
-    if session.session["package"]=="Normal":
+    cursor.find_one_and_update({"customer_name":sessions.session["username"],"room":sessions.session["room_no"]},{"$set":{"status":"Recieved"}})
+    if sessions.session["package"]=="Normal":
         return redirect("/CustomerNormalPortal")
-    elif session.session["package"]=="Luxury":
+    elif sessions.session["package"]=="Luxury":
         return redirect("/CustomerLuxuryPortal")
-    elif session.session["package"]=="Luxury":
+    elif sessions.session["package"]=="Luxury":
         return redirect("/CustomerSeaViewPortal")
     else:
         return redirect("/")        
@@ -1495,5 +1486,4 @@ def lift():
     return render_template("Lift.html",data=data)
 
 if __name__=='__main__':
-    session()
     app.run(debug = True,port=1267)
